@@ -8,6 +8,30 @@
     "devDependencies": {
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.8.0",
+        "sass": "^1.66.1",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@amcharts/amcharts5": "^5.2.19",
+        "@amcharts/amcharts5-geodata": "^5.0.3",
+        "@gtm-support/vue-gtm": "^2.0.0",
+        "@vitejs/plugin-vue": "^4.3.3",
+        "axios": "^0.27.2",
+        "chartist": "^0.11.4",
+        "core-js": "3.26.1",
+        "es6-promise": "^4.2.8",
+        "google-maps": "4.3.3",
+        "sass": "^1.53.0",
+        "serve": "^14.2.0",
+        "vue": "^3.3.4",
+        "vue-chartjs": "^4.1.1",
+        "vue-clickaway": "^2.2.2",
+        "vue-github-button": "^3.1.0",
+        "vue-i18n": "^9.2.2",
+        "vue-loader": "^17.2.2",
+        "vue-material": "^1.0.0-beta-16",
+        "vue-router": "^4.2.4",
+        "vue-social-sharing": "^3.0.9",
+        "vue-yandex-maps": "^0.12.3"
     }
 }
