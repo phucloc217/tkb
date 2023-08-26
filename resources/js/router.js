@@ -15,6 +15,16 @@ const routes = [
     redirect: "/dashboard-default",
   },
   {
+    path: "/giangvien",
+    name: "Giảng viên",
+    component: () => import("./views/GiangVien.vue"),
+  },
+  {
+    path: "/xeptkb",
+    name: "Xếp thời khóa biểu",
+    component: () => import("./views/XepTKB.vue"),
+  },
+  {
     path: "/dashboard-default",
     name: "Dashboard",
     component: Dashboard,
