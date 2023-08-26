@@ -1,63 +1,66 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
-import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
+import Dashboard from "./views/Dashboard.vue";
+import Tables from "./views/Tables.vue";
+import Billing from "./views/Billing.vue";
+import VirtualReality from "./views/VirtualReality.vue";
+import RTL from "./views/Rtl.vue";
+import Profile from "./views/Profile.vue";
+import Signup from "./views/Signup.vue";
+import Signin from "./views/Signin.vue";
 
-import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
-import TableList from "@/pages/TableList.vue";
-import Typography from "@/pages/Typography.vue";
-import Icons from "@/pages/Icons.vue";
-import Maps from "@/pages/Maps.vue";
-import Notifications from "@/pages/Notifications.vue";
 const routes = [
-    {
-      path: "/",
-      component: DashboardLayout,
-      redirect: "/dashboard",
-      children: [
-        {
-          path: "dashboard",
-          name: "Dashboard",
-          component: Dashboard,
-        },
-        {
-          path: "user",
-          name: "User Profile",
-          component: UserProfile,
-        },
-        {
-          path: "table",
-          name: "Table List",
-          component: TableList,
-        },
-        {
-          path: "typography",
-          name: "Typography",
-          component: Typography,
-        },
-        {
-          path: "icons",
-          name: "Icons",
-          component: Icons,
-        },
-        {
-          path: "maps",
-          name: "Maps",
-          meta: {
-            hideFooter: true,
-          },
-          component: Maps,
-        },
-        {
-          path: "notifications",
-          name: "Notifications",
-          component: Notifications,
-        },
-        {
-          path: "upgrade",
-          name: "Upgrade to PRO",
-          component: UpgradeToPRO,
-        },
-      ],
-    },
-  ];
-export default routes;
+  {
+    path: "/",
+    name: "/",
+    redirect: "/dashboard-default",
+  },
+  {
+    path: "/dashboard-default",
+    name: "Dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/tables",
+    name: "Tables",
+    component: Tables,
+  },
+  {
+    path: "/billing",
+    name: "Billing",
+    component: Billing,
+  },
+  {
+    path: "/virtual-reality",
+    name: "Virtual Reality",
+    component: VirtualReality,
+  },
+  {
+    path: "/rtl-page",
+    name: "RTL",
+    component: RTL,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+  },
+  {
+    path: "/signin",
+    name: "Signin",
+    component: Signin,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
+  },
+  
+];
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+  linkActiveClass: "active",
+});
+
+export default router;
