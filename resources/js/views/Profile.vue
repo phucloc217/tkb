@@ -55,21 +55,19 @@
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">Học hàm</label>
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Không có</option>
-                    <option value="1">Phó Giáo sư</option>
-                    <option value="2">Giáo sư</option>
+                    <option value="K" selected>Không có</option>
+                    <option value="PGS">Phó Giáo sư</option>
+                    <option value="GS">Giáo sư</option>
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">Học vị</label>
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Cử nhân / Kỹ sư</option>
-                    <option value="1">Thạc sĩ</option>
-                    <option value="2">Tiến sĩ</option>
+                    <option value="CN" selected>Cử nhân / Kỹ sư</option>
+                    <option value="THS">Thạc sĩ</option>
+                    <option value="TS">Tiến sĩ</option>
                   </select>
                 </div>
-
-
               </div>
               <hr class="horizontal dark" />
               <p class="text-uppercase text-sm">Thông tin liên hệ</p>
