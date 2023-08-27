@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LopHocRequest;
 use App\Models\Lophoc;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use function PHPUnit\Framework\isEmpty;
 
 class LopHocController extends Controller
 {
@@ -17,19 +20,16 @@ class LopHocController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(LopHocRequest $request)
     {
-        
+        $lop = Lophoc::where('id','=',$request->id)->get();
+        if($lop->isEmpty()) 
+        return Lophoc::create($request->all());
+        return response()->json(['message'=>'Lớp này đã tồn tại'], Response::HTTP_INTERNAL_SERVER_ERROR);
+       
+
     }
 
     /**
@@ -37,15 +37,7 @@ class LopHocController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+       return Lophoc::where('id','=',$id)->first();
     }
 
     /**
@@ -61,6 +53,8 @@ class LopHocController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $lophoc = Lophoc::find($id);
+        if($lophoc != null) return $lophoc->delete();
+        return response()->json(['message'=>'Không tìm thấy lớp học này'], Response::HTTP_NOT_FOUND);
     }
 }
