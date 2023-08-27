@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LopHocRequest;
-use App\Models\Lophoc;
 use Illuminate\Http\Request;
 
-class LopHocController extends Controller
+class GiangVienController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Lophoc::all();
+        //
     }
 
     /**
@@ -27,9 +25,9 @@ class LopHocController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LopHocRequest $request)
+    public function store(Request $request)
     {
-        
+        //
     }
 
     /**

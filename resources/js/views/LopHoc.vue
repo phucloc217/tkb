@@ -10,11 +10,12 @@
 
 <script>
 import LopHocTable from "./components/LopHocTable.vue"; ;
-
+import ArgonInput from "@/components/ArgonInput.vue";
 export default {
   name: "lophoc",
   components: {
     LopHocTable,
+    ArgonInput
   },
   data() {
     return {
