@@ -59,24 +59,24 @@
         <div class="modal-body">
           <div class="">
             <label for="example-text-input" class="form-control-label">Mã lớp</label>
-            <argon-input type="text" value="" />
+            <input class="form-control" type="text" name="id" v-model="this.form.id" />
           </div>
           <div class="">
             <label for="example-text-input" class="form-control-label">Tên lớp</label>
-            <argon-input type="text" value="" />
+            <input class="form-control" type="text" name="tenlop" v-model="this.form.tenlop" />
           </div>
           <div class="">
             <label for="example-text-input" class="form-control-label">Sĩ số</label>
-            <argon-input type="number" value="" />
+            <input class="form-control" type="number" name="siso" v-model="this.form.siso" />
           </div>
           <div class="">
             <label for="example-text-input" class="form-control-label">Khóa học</label>
-            <argon-input type="number" value="" />
+            <input class="form-control" type="number" name="khoahoc" v-model="this.form.khoahoc" />
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-primary" @click="postLopHoc()">Lưu</button>
         </div>
       </div>
     </div>
@@ -86,6 +86,8 @@
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 export default {
   name: "lophoc-table",
   components: {
@@ -95,6 +97,12 @@ export default {
   data() {
     return {
       listLopHoc: {},
+      form: {
+        id: null,
+        tenlop: null,
+        siso: 0,
+        khoahoc: 0
+      },
     }
   },
   methods: {
@@ -104,7 +112,24 @@ export default {
         .then(function (response) {
           _THIS.listLopHoc = response.data
         })
-        .catch(response => console.log(response));
+        .catch(function (err) {
+          // console.log(err)
+          toast.error("Đã xảy ra lỗi", { theme: 'colored' })
+        });
+    },
+    async postLopHoc() {
+      await axios.post(this.API_URL + '/lophoc', this.form)
+        .then(function () {
+          toast.success("Thêm lớp học thành công", { theme: 'colored' }),
+            form.id = null,
+            form.tenlop = null,
+            form.siso = 0,
+            form.khoahoc = 0
+        })
+        .catch(function (err) {
+          // console.log(err)
+          toast.error("Đã xảy ra lỗi", { theme: 'colored' })
+        });
     },
   },
   mounted() {
