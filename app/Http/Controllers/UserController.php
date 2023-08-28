@@ -2,24 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class GiangVienController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return User::all();
     }
 
     /**
@@ -59,6 +53,8 @@ class GiangVienController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id','=',$id)->first;
+         if(!$user->isEmpty()) return $user->delete();
+        return response()->json(['message'=>'Không tìm thấy lớp học này'], Response::HTTP_NOT_FOUND);
     }
 }

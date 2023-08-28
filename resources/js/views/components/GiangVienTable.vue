@@ -14,7 +14,7 @@
               >Học hàm, học vị</th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >Employed</th>
+              >Số điện thoại</th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
@@ -41,7 +41,7 @@
               </td>
              
               <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                <span class="text-secondary text-xs font-weight-bold">0384731507</span>
               </td>
               <td class="align-middle">
                 <a
