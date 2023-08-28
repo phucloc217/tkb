@@ -35,9 +35,9 @@
               </td>
               <td class="align-middle">
                 <span class="m-3"> <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                    data-toggle="tooltip" data-original-title="Edit user">Chỉnh sửa</a></span>
+                    data-toggle="tooltip" data-original-title="Edit class">Chỉnh sửa</a></span>
                 <span class="m-3 "> <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                    data-toggle="tooltip" data-original-title="Edit user">Xóa</a></span>
+                    data-toggle="tooltip" data-original-title="Delete class" @click="btnDelete(lophoc.id)">Xóa</a></span>
 
               </td>
             </tr>
@@ -118,19 +118,54 @@ export default {
         });
     },
     async postLopHoc() {
+      let _THIS = this;
       await axios.post(this.API_URL + '/lophoc', this.form)
         .then(function () {
           toast.success("Thêm lớp học thành công", { theme: 'colored' }),
-            form.id = null,
-            form.tenlop = null,
-            form.siso = 0,
-            form.khoahoc = 0
+            _THIS.form.id = null,
+            _THIS.form.tenlop = null,
+            _THIS.form.siso = 0,
+            _THIS.form.khoahoc = 0
         })
         .catch(function (err) {
-          // console.log(err)
+          console.log(err)
           toast.error("Đã xảy ra lỗi", { theme: 'colored' })
         });
     },
+
+    async deleteLopHoc(id) {
+      await axios.delete(this.API_URL + '/lophoc/'+id, { data: { id: id }})
+        .then(function () {
+          toast.success("Xóa lớp học thành công", { theme: 'colored' })
+        })
+        .catch(function (err) {
+          console.log(err)
+          toast.error("Đã xảy ra lỗi", { theme: 'colored' })
+        });
+    },
+    btnDelete(id) {
+
+      this.$swal({
+        title: 'Xóa lớp ' + id,
+        text: "Bạn sẽ không thể hoàn tác thao tác này",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa',
+        confirmButtonColor: '#00FFFF',
+        cancelButtonText: 'Đóng',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteLopHoc(id)
+          this.getLopHoc()
+          // this.$swal(
+          //   'Deleted!',
+          //   'Your file has been deleted.',
+          //   'success'
+          // )
+        }
+      });
+    }
   },
   mounted() {
     this.getLopHoc();
