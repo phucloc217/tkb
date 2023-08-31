@@ -33,7 +33,7 @@
     </div>
     <div class="py-4 container-fluid">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
@@ -92,9 +92,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <profile-card />
-        </div>
+
       </div>
     </div>
   </main>
@@ -103,7 +101,6 @@
 <script>
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
-import ProfileCard from "./components/ProfileCard.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 
@@ -113,10 +110,19 @@ export default {
   name: "profile",
   data() {
     return {
-      showMenu: false
+      showMenu: false,
+      form: {
+        name: '',
+        ngaysinh: '',
+        hocham: 'K',
+        hocvi: 'CN',
+        diachi: '',
+        sdt: '',
+        email: ''
+      }
     };
   },
-  components: { ProfileCard, ArgonInput, ArgonButton },
+  components: { ArgonInput, ArgonButton },
 
   mounted() {
     this.$store.state.isAbsolute = true;

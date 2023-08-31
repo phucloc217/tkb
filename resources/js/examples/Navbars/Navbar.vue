@@ -22,7 +22,16 @@
         >
         </div>
         <ul class="navbar-nav justify-content-end">
-          
+          <li class="nav-item d-flex align-items-center">
+            <router-link
+              :to="{ name: 'Đăng nhập' }"
+              class="px-0 nav-link font-weight-bold text-white"
+            >
+            <font-awesome-icon icon="fa-solid fa-power-off" :class="this.$store.state.isRTL ? 'ms-sm-2' : 'me-sm-2'"/>
+             
+              <span  class="d-sm-inline d-none">Đăng xuất</span>
+            </router-link>
+          </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
               href="#"

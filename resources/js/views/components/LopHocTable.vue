@@ -1,9 +1,11 @@
 <template>
   <div class="card">
     <div class="card-header pb-0">
-      <h6>Danh sách lớp học</h6>
-      <argon-button color="success" size="sm" class="ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm
-        Lớp học</argon-button>
+      <div class="d-flex align-items-center">
+        <h6>Danh sách lớp học</h6>
+        <argon-button color="success" size="sm" class="ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm
+          Lớp học</argon-button>
+      </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -126,6 +128,7 @@ export default {
             _THIS.form.tenlop = null,
             _THIS.form.siso = 0,
             _THIS.form.khoahoc = 0
+          _THIS.getLopHoc();
         })
         .catch(function (err) {
           console.log(err)
@@ -134,7 +137,7 @@ export default {
     },
 
     async deleteLopHoc(id) {
-      await axios.delete(this.API_URL + '/lophoc/'+id, { data: { id: id }})
+      await axios.delete(this.API_URL + '/lophoc/' + id, { data: { id: id } })
         .then(function () {
           toast.success("Xóa lớp học thành công", { theme: 'colored' })
         })

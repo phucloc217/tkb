@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\User;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Nette\Utils\DateTime;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -19,9 +23,22 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+    
+        
+        DB::beginTransaction();
+        try {
+            $date = date("dmY", strtotime($request->ngaysinh));
+            $user = new User ($request->all());
+            $user->password = Hash::make($date);
+            $user->save();
+            DB::commit();
+           return response()->json($user, Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+        }
     }
 
     /**
@@ -53,8 +70,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::where('id','=',$id)->first;
-         if(!$user->isEmpty()) return $user->delete();
-        return response()->json(['message'=>'Không tìm thấy lớp học này'], Response::HTTP_NOT_FOUND);
+        $user = User::where('id', '=', $id)->first;
+        if (!$user->isEmpty())
+            return $user->delete();
+        return response()->json(['message' => 'Không tìm thấy lớp học này'], Response::HTTP_NOT_FOUND);
     }
 }

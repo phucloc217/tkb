@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
 	protected $table = 'users';
-	public $incrementing = false;
+	public $incrementing = true;
 
 	protected $casts = [
 		'ngaysinh' => 'datetime',

@@ -11,7 +11,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'ngaysinh' => 'date|required',
+            'email' => 'email|required|unique:users,email'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Bạn phải nhập tên giảng viên',
+            'ngaysinh.required' => 'Bạn phải nhập ngày sinh giảng viên',
+            'ngaysinh.date'=>'Ngày sinh sai định dạng',
+            'email.requỉed'=>'Bạn phải nhập email',
+            'email.email'=>'Email sai định dạng',
+            'email.unique'=>'Email đã tồn tại'
+
         ];
     }
 }
