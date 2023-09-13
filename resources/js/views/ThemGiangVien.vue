@@ -16,11 +16,13 @@
               <div class="row">
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">Họ và tên</label>
-              <input class="form-control" type="text" v-model="this.form.name" v-bind:class="{'form-control':true, 'is-invalid' : this.checkErrors.name,'is-valid':!this.checkErrors.name&&this.form.name!=''}" />
+                  <input class="form-control" type="text" v-model="this.form.name"
+                    v-bind:class="{ 'form-control': true, 'is-invalid': this.checkErrors.name, 'is-valid': !this.checkErrors.name && this.form.name != '' }" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">Ngày sinh</label>
-                  <input class="form-control" type="date" v-model="form.ngaysinh" v-bind:class="{'form-control':true, 'is-invalid' : this.checkErrors.ngaysinh,'is-valid':!this.checkErrors.ngaysinh&&this.form.ngaysinh!=''}"/>
+                  <input class="form-control" type="date" v-model="form.ngaysinh"
+                    v-bind:class="{ 'form-control': true, 'is-invalid': this.checkErrors.ngaysinh, 'is-valid': !this.checkErrors.ngaysinh && this.form.ngaysinh != '' }" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">Học hàm</label>
@@ -48,15 +50,17 @@
                 </div>
                 <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label">Số điện thoại</label>
-                  <input type="tel" class="form-control" v-model="form.sdt" v-bind:class="{'form-control':true, 'is-invalid' : this.checkErrors.sdt,'is-valid':!this.checkErrors.sdt&&this.form.sdt!=''}"/>
+                  <input type="tel" class="form-control" v-model="form.sdt"
+                    v-bind:class="{ 'form-control': true, 'is-invalid': this.checkErrors.sdt, 'is-valid': !this.checkErrors.sdt && this.form.sdt != '' }" />
                 </div>
                 <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label">Email</label>
-                  <input type="email" class="form-control" v-model="form.email" v-bind:class="{'form-control':true, 'is-invalid' : this.checkErrors.email,'is-valid':!this.checkErrors.email&&this.form.email!=''}"/>
+                  <input type="email" class="form-control" v-model="form.email"
+                    v-bind:class="{ 'form-control': true, 'is-invalid': this.checkErrors.email, 'is-valid': !this.checkErrors.email && this.form.email != '' }" />
                 </div>
                 <div class="col-md-4">
-                  <label for="example-text-input" class="form-control-label">Postal code</label>
-                  <argon-input type="text" />
+                  <label for="example-text-input" class="form-control-label">Ảnh</label>
+                  <input class="form-control" ref="myFiles" type="file" id="formFile" @change="onFileChange">
                 </div>
               </div>
             </div>
@@ -88,9 +92,10 @@ export default {
         hocvi: 'CN',
         diachi: '',
         sdt: '',
-        email: ''
+        email: '',
+        anh: []
       },
-      checkErrors:{
+      checkErrors: {
         name: false,
         ngaysinh: false,
         diachi: false,
@@ -100,29 +105,50 @@ export default {
     };
   },
   components: { ArgonInput, ArgonButton },
-methods:{
-  validatePost()
-  {
-      this.form.name==''? this.checkErrors.name=true:this.checkErrors.name=false
-      this.form.ngaysinh==''? this.checkErrors.ngaysinh=true:this.checkErrors.ngaysinh=false
-      this.form.email==''? this.checkErrors.email=true:this.checkErrors.email=false
-      this.form.sdt==''? this.checkErrors.sdt=true:this.checkErrors.sdt=false
-      if(this.checkErrors.name||this.checkErrors.ngaysinh||this.checkErrors.email||this.checkErrors.sdt) return;
+  methods: {
+    validatePost() {
+      this.form.name == '' ? this.checkErrors.name = true : this.checkErrors.name = false
+      this.form.ngaysinh == '' ? this.checkErrors.ngaysinh = true : this.checkErrors.ngaysinh = false
+      this.form.email == '' ? this.checkErrors.email = true : this.checkErrors.email = false
+      this.form.sdt == '' ? this.checkErrors.sdt = true : this.checkErrors.sdt = false
+      if (this.checkErrors.name || this.checkErrors.ngaysinh || this.checkErrors.email || this.checkErrors.sdt) return;
       this.postGiangVien();
-      
-  },
-  async postGiangVien(){
-      await axios.post(this.API_URL + '/user',this.form)
+      // console.log(this.form.anh);
+    },
+    async postGiangVien() {
+      await axios.post(this.API_URL + '/user', this.form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
         .then(function (response) {
+
           toast.success("Thêm thành công", { theme: 'colored' })
           console.log(response)
         })
         .catch(function (err) {
           console.log(err)
           toast.error(err.response.data.message, { theme: 'colored' })
-        }); 
+        });
+    },
+    onFileChange(e) {
+      let files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      let reader = new FileReader();
+      let vm = this;
+      reader.onload = (e) => {
+        vm.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (e) {
+      this.form.anh = '';
+    }
   },
-},
 
   mounted() {
     // this.$store.state.isAbsolute = true;

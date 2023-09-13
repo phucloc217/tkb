@@ -1,30 +1,59 @@
+
 <template>
   <div class="row">
-    <div class="col-10">
+    <div class="col-12">
       <div class="card p-3">
-        <div class="card-header pb-0">
-          <h6>Xếp thời khóa biểu</h6>
+        <div class="card-header pb-3 d-flex align-items-center">
+          <div class="col-8">
+            <h6>Xếp thời khóa biểu</h6>
+            <input type="hidden" id="ngayhoc" v-model="ngayhoc">
+          </div>
+
+          <div class="col-4">
+
+            <select name="lophoc" id="" class="form-select" v-model="id_lophoc" @change="changeEventsSource">
+              <option v-for="lophoc in listLopHoc" :value="lophoc.id">{{ lophoc.id }}</option>
+            </select>
+          </div>
 
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <FullCalendar :options="calendarOptions" />
+          <FullCalendar :options="calendarOptions" ref="calendar" />
         </div>
       </div>
     </div>
-    <div class="col-2">
-      <div class="card p-3">
-        <div class="card-header pb-0">
-          <h6>Môn học</h6>
-
-        </div>
-        <div class="card-body px-0 pt-0 pb-2">
-          <div id="containerEl">
-            <div class="item-class btn btn-sm btn-primary" data-event='{ "title": "my event", "duration": "02:00" }'>Tin
-              học</div>
-            <div class="item-class btn btn-sm btn-primary" data-event='{ "title": "my event", "duration": "02:00" }'>Quản
-              trị mạng 1</div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Thêm lịch học ngày </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body">
 
+            <div class="">
+              <label for="example-text-input" class="form-control-label">Môn học</label>
+              <select name="tenlop" id="tenlop" class="form-select" v-model="id_mh">
+                <option v-for="monhoc in listMonHoc" :value="monhoc.id" class="">{{ monhoc.tenmh }} - {{ monhoc.name }}
+                </option>
+              </select>
+
+            </div>
+            <div class="">
+              <label for="example-text-input" class="form-control-label">Buổi</label>
+              <select name="buoihoc" id="buoihoc" class="form-select">
+                <option value="7:30:00" class="">Sáng</option>
+                <option value="13:00:00" class="">Chiều</option>
+              </select>
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary" @click="btnLuu">Lưu</button>
+          </div>
         </div>
       </div>
     </div>
@@ -32,36 +61,57 @@
 </template>
 <style scoped>
 .item-event-tkb {
-  padding-left:30px ;
+  padding-left: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 </style>
 <script>
+import { ref } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import viLocale from '@fullcalendar/core/locales/vi'
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+import axios from 'axios'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import ArgonButton from "@/components/ArgonButton.vue";
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+import $ from "jquery/dist/jquery";
+import AddEventModal from "./AddEventModal.vue"
+import moment from 'moment';
 export default {
   components: {
-    FullCalendar // make the <FullCalendar> tag available
+    FullCalendar,
+    ArgonButton,
+    AddEventModal
   },
   data() {
+    var vm = this
     return {
+      form: {
+        start: null,
+        end: null,
+        id_monhoc: null,
+
+      },
+      id_mh: null,
+      id_lophoc: '',
+      ngayhoc: '',
+      start: '',
+      listMonHoc: null,
+      listLopHoc: null,
       calendarOptions: {
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek',
-
         headerToolbar: [
 
         ],
-        events: [
-
-        ],
+        events: {
+          // url: this.API_URL + "/ngayhoc/1"
+        },
         locale: viLocale,
         slotMinTime: "07:30:00",
         slotMaxTime: "17:00:00",
@@ -71,8 +121,7 @@ export default {
         editable: true,
         droppable: true,
         eventColor: '#ed8936',
-        eventTextColor:'white',
-        // eventBorderColor:'red',
+        eventTextColor: 'white',
         businessHours: {
           daysOfWeek: [1, 2, 3, 4, 5, 6],
           startTime: '07:30',
@@ -82,37 +131,119 @@ export default {
         eventContent: function (arg) {
           let italicEl = document.createElement('div')
           italicEl.classList.add("item-event-tkb")
-          italicEl.innerHTML = arg.timeText + "<br/>" +'<b>' + arg.event._def.title + "</b>" + "<br/>" + "Phòng máy 1" + "<br/>" + "Thầy N.P.Lộc"
-
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description
           let arrayOfDomNodes = [italicEl]
           return { domNodes: arrayOfDomNodes }
         },
-        eventDidMount: function (info) {
-          this.tooltip = new tippy(info.el, {
-            content: info.event._def.extendedProps.description
-          });
-
+        dateClick: function (date, jsEvent, view) {
+          vm.showModal(date)
         },
+        eventClick: function (info) {
+          console.log(info.event._def.extendedProps)
+          Swal.fire({
+            title: 'Xóa lịch ',
+            text: "Bạn sẽ không thể hoàn tác thao tác này",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            confirmButtonColor: '#00FFFF',
+            cancelButtonText: 'Đóng',
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          })
+        }
       }
 
     }
   },
   methods: {
+    showModal(date) {
+      if (this.id_lophoc != "") {
+        let ngayhoc = moment(date.date).format('DD/MM/YYYY')
+        this.ngayhoc = ngayhoc
+        // console.log(date.date < Date.now())
+        $("#exampleModalLabel").text("Thêm lịch học ngày " + this.ngayhoc)
+        $("#ngayhoc").val(ngayhoc)
+        let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('exampleModal'))
+        modal.show();
+      }
+    },
+    async postNgayHoc() {
+      let _THIS = this
+      await axios.post(this.API_URL + '/ngayhoc/', this.form)
+        .then(function (response) {
+          toast.success("Thêm thành công", { theme: 'colored' })
+          _THIS.changeEventsSource()
+        }).
+        catch(function (err) {
+          toast.error(err.response.data.message, { theme: 'colored' })
+        })
+    },
+    btnLuu() {
+      if (this.id_lophoc == "" || this.id_lophoc == null) return;
+      this.form.id_monhoc = this.id_mh
+      let time = $("#ngayhoc").val();
+      let gio = $("#buoihoc").val();
+      gio = gio.split(":")
+      let bd = moment(time, "DD-MM-YYYY HH:mm:ss").set({ hour: gio[0], minute: gio[1], second: 0, millisecond: 0 })
+      this.form.start = bd.toISOString(true)
+      let kt = bd.add(3, 'hours').add(15, 'minutes')
+      this.form.end = kt.toISOString(true)
 
+      this.postNgayHoc();
+
+    },
+    async getLopHoc() {
+      let _THIS = this
+      await axios.get(this.API_URL + '/lophoc')
+        .then(function (response) {
+          _THIS.listLopHoc = response.data
+        })
+        .catch(function (err) {
+          toast.error("Không thể lấy danh sách lớp học", { theme: 'colored' })
+        });
+    },
+    async changeEventsSource() {
+      let _THIS = this
+      let calendarApi = this.$refs.calendar.getApi()
+      var events = calendarApi.getEventSources()
+      events.forEach(event => {
+        event.remove()
+      })
+      await this.getMonHoc()
+      this.listMonHoc.forEach(element => {
+        calendarApi.addEventSource(this.API_URL + "/ngayhoc/" + element.id)
+      });
+      calendarApi.refetchEvents()
+    },
+    async getMonHoc() {
+      let _THIS = this
+      await axios.get(this.API_URL + '/monhoc/' + this.id_lophoc)
+        .then(function (response) {
+          _THIS.listMonHoc = response.data
+        })
+        .catch(function (err) {
+          toast.error("Không thể lấy danh sách môn học", { theme: 'colored' })
+        });
+    },
+    async deleteEvent() {
+      await axios.delete('/ngayhoc/')
+        .then(function (respone) {
+
+        })
+    }
   },
   mounted() {
-    let containerEl = document.getElementById('containerEl');
-    new Draggable(containerEl, {
-      itemSelector: '.item-class',
-      eventData: function (eventEl) {
-        return {
-          title: eventEl.innerText,
-          description: 'description for All Day Event',
-          duration: '03:15',
-        };
-      },
 
-    });
+    this.getLopHoc();
+
   }
 }
 </script>

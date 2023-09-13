@@ -7,9 +7,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 use Nette\Utils\DateTime;
 use Symfony\Component\HttpFoundation\Response;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\ImageManagerStatic as Image;
 class UserController extends Controller
 {
     /**
@@ -25,16 +28,21 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-    
-        
+        if ($request->get('anh')) {
+            $image = $request->get('anh');
+            $name = time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            Image::make($request->get('image'))->save(public_path('images/') . $name);
+        }
+
+        return 1;
         DB::beginTransaction();
         try {
             $date = date("dmY", strtotime($request->ngaysinh));
-            $user = new User ($request->all());
+            $user = new User($request->all());
             $user->password = Hash::make($date);
             $user->save();
             DB::commit();
-           return response()->json($user, Response::HTTP_CREATED);
+            return response()->json($user, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             DB::rollback();
             return $e;

@@ -28,15 +28,16 @@ class MonhocNgayhoc extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'ngayhoc' => 'datetime',
+
 		'id_monhoc' => 'int',
 		'maphong' => 'int'
 	];
 
 	protected $fillable = [
-		'ngayhoc',
 		'id_monhoc',
-		'maphong'
+		'maphong',
+		'start',
+		'end'
 	];
 
 	public function phonghoc()

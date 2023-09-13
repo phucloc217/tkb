@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('ngayhoc')->nullable();
             $table->integer('id_monhoc')->nullable()->index('id_monhoc');
             $table->integer('maphong')->nullable()->index('maphong');
-            $table->boolean('buoi')->default(true);
+            $table->time('start');
         });
     }
 

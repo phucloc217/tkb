@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\LopHocController;
+use App\Http\Controllers\MonHocController;
+use App\Http\Controllers\NgayHocController;
 use App\Http\Controllers\UserController;
+use App\Models\MonhocNgayhoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('/lophoc', LopHocController::class);
 Route::resource('/user', UserController::class);
+Route::resource('/ngayhoc',NgayHocController::class);
+Route::resource('/monhoc', MonHocController::class);
