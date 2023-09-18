@@ -13,7 +13,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import $ from 'jquery';
 /* add icons to the library */
 library.add(faAddressCard,faBriefcase,faPowerOff,faBook)
 import App from './App.vue'
@@ -21,7 +20,6 @@ import App from './App.vue'
 const app = createApp(App)
 app.use(router);
 app.use(store);
-app.use($)
 app.use(ArgonDashboard);
 app.use(VueSweetalert2);
 app.component('font-awesome-icon', FontAwesomeIcon)

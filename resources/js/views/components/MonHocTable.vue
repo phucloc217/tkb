@@ -146,6 +146,7 @@ export default {
             _THIS.getMonHoc();
         })
         .catch(function (err) {
+          console.log(err)
           toast.error("Đã xảy ra lỗi", { theme: 'colored' })
         });
     },
