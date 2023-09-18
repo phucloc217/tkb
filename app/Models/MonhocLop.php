@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $tenmh
  * @property int|null $sotiet
+ * @property int|null $conlai
  * @property string|null $malop
  * @property string $idgv
  * 
@@ -36,6 +37,7 @@ class MonhocLop extends Model
 	protected $fillable = [
 		'tenmh',
 		'sotiet',
+		'conlai',
 		'malop',
 		'idgv'
 	];

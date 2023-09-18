@@ -34,7 +34,6 @@ class UserController extends Controller
             Image::make($request->get('image'))->save(public_path('images/') . $name);
         }
 
-        return 1;
         DB::beginTransaction();
         try {
             $date = date("dmY", strtotime($request->ngaysinh));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MonHocRequest;
 use App\Models\MonhocLop;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,15 @@ class MonHocController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MonHocRequest $request)
     {
-        //
+        $monhoc = new MonhocLop();
+        $monhoc->tenmh = $request->tenmh;
+        $monhoc->sotiet = $request->sotiet;
+        $monhoc->conlai = $request->sotiet;
+        $monhoc->malop = $request->malop;
+        $monhoc->idgv = $request->idgv;
+        return $monhoc->save();
     }
 
     /**
@@ -37,14 +44,6 @@ class MonHocController extends Controller
     public function show(string $id)
     {
         return MonhocLop::leftJoin('users','monhoc_lop.idgv','users.id')->where('malop',"=",$id)->select('monhoc_lop.*','users.name')->get();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -60,6 +59,7 @@ class MonHocController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $monhoc = MonhocLop::find($id);
+        return $monhoc->delete();
     }
 }

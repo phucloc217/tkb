@@ -110,7 +110,6 @@ export default {
 
         ],
         events: {
-          // url: this.API_URL + "/ngayhoc/1"
         },
         locale: viLocale,
         slotMinTime: "07:30:00",
@@ -139,7 +138,6 @@ export default {
           vm.showModal(date)
         },
         eventClick: function (info) {
-          console.log(info.event._def.extendedProps)
           Swal.fire({
             title: 'Xóa lịch ',
             text: "Bạn sẽ không thể hoàn tác thao tác này",
@@ -151,11 +149,7 @@ export default {
             reverseButtons: true
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
+              vm.deleteEvent(info.event)
             }
           })
         }
@@ -196,9 +190,7 @@ export default {
       this.form.start = bd.toISOString(true)
       let kt = bd.add(3, 'hours').add(15, 'minutes')
       this.form.end = kt.toISOString(true)
-
       this.postNgayHoc();
-
     },
     async getLopHoc() {
       let _THIS = this
@@ -207,6 +199,7 @@ export default {
           _THIS.listLopHoc = response.data
         })
         .catch(function (err) {
+          if(err.data!=null)
           toast.error("Không thể lấy danh sách lớp học", { theme: 'colored' })
         });
     },
@@ -233,15 +226,29 @@ export default {
           toast.error("Không thể lấy danh sách môn học", { theme: 'colored' })
         });
     },
-    async deleteEvent() {
-      await axios.delete('/ngayhoc/')
+    async deleteEvent(event) {
+      let _THIS = this
+      let id = event._def.publicId
+      await axios.delete(this.API_URL+'/ngayhoc/'+id,{ data: { id: id } })
         .then(function (respone) {
-
+          Swal.fire(
+            'Xóa thành công!',
+            'Lịch học đã được xóa.',
+            'success'
+          )
+          event.remove()
+        })
+        .catch(function (err){
+          Swal.fire(
+            'Đã xảy ra lỗi!',
+            'Không thể xóa lịch học',
+            'error'
+          )
+          return 0;
         })
     }
   },
   mounted() {
-
     this.getLopHoc();
 
   }
