@@ -80,6 +80,6 @@ class UserController extends Controller
         $user = User::where('id', '=', $id)->first;
         if (!$user->isEmpty())
             return $user->delete();
-        return response()->json(['message' => 'Không tìm thấy lớp học này'], Response::HTTP_NOT_FOUND);
+        return response()->json(['message' => 'Không tìm thấy giảng viên'], Response::HTTP_NOT_FOUND);
     }
 }
