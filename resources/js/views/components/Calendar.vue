@@ -79,7 +79,6 @@ import 'vue3-toastify/dist/index.css';
 import ArgonButton from "@/components/ArgonButton.vue";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
-import $ from "jquery/dist/jquery";
 import AddEventModal from "./AddEventModal.vue"
 import moment from 'moment';
 export default {

@@ -113,7 +113,6 @@ export default {
       this.form.sdt == '' ? this.checkErrors.sdt = true : this.checkErrors.sdt = false
       if (this.checkErrors.name || this.checkErrors.ngaysinh || this.checkErrors.email || this.checkErrors.sdt) return;
       this.postGiangVien();
-      // console.log(this.form.anh);
     },
     async postGiangVien() {
       await axios.post(this.API_URL + '/user', this.form, {
@@ -124,7 +123,16 @@ export default {
         .then(function (response) {
 
           toast.success("Thêm thành công", { theme: 'colored' })
-          console.log(response)
+
+          form.name = ''
+          form.ngaysinh = ''
+          form.hocham = 'K'
+          form.hocvi = 'CN'
+          form.diachi = ''
+          form.sdt = ''
+          form.email = ''
+          form.anh = []
+
         })
         .catch(function (err) {
           console.log(err)

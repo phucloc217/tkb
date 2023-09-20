@@ -17,8 +17,9 @@ return new class extends Migration
             $table->integer('id', true);
             $table->string('tenmh', 30);
             $table->integer('sotiet')->nullable();
+            $table->integer('conlai')->nullable();
             $table->char('malop', 10)->nullable()->index('malop');
-            $table->int('idgv')->index('a');
+            $table->integer('idgv')->index('a');
         });
     }
 
