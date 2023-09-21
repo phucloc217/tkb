@@ -66,11 +66,11 @@
           <div class="">
             <label for="example-text-input" class="form-control-label">Ngành</label>
             <select name="tenlop" id="tenlop" class="form-select" v-model="this.form.tenlop">
-                <option value="Quản trị mạng máy tính">Quản trị mạng máy tính</option>
-                <option value="Tin học văn phòng">Tin học văn phòng</option>
-                <option value="Kĩ thuật lắp ráp & sửa chữa máy tính">Kĩ thuật lắp ráp & sửa chữa máy tính</option>
+              <option value="Quản trị mạng máy tính">Quản trị mạng máy tính</option>
+              <option value="Tin học văn phòng">Tin học văn phòng</option>
+              <option value="Kĩ thuật lắp ráp & sửa chữa máy tính">Kĩ thuật lắp ráp & sửa chữa máy tính</option>
             </select>
-            
+
           </div>
           <div class="">
             <label for="example-text-input" class="form-control-label">Sĩ số</label>
@@ -115,7 +115,13 @@ export default {
   methods: {
     async getLopHoc() {
       let _THIS = this;
-      await axios.get(this.API_URL + '/lophoc')
+      await axios.get(this.API_URL + '/lophoc', {
+        headers: {
+          'Authorization': 'Token ' + window.sessionStorage.getItem('token'),
+          'Content-Type': 'application/json; charset=utf-8',
+          'Accept': 'application/json',
+        }
+      })
         .then(function (response) {
           _THIS.listLopHoc = response.data
         })

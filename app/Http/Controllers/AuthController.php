@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -23,28 +23,25 @@ class AuthController extends Controller
                 return response()->json([
                     'status_code' => 500,
                     'message' => 'Unauthorized'
-                ]);
+                ],Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            $user = User::where('email', $request->email)->first();
-
+            $user = User::where('sdt', $request->sdt)->first();
+ 
             if (!Hash::check($request->password, $user->password, [])) {
-                throw new \Exception('Lỗi đăng nhập');
+                throw new \Exception('Sai mật khẩu');
             }
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
-
             return response()->json([
-                'status_code' => 200,
                 'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
             ]);
         } catch (\Exception $error) {
             return response()->json([
                 'status_code' => 500,
-                'message' => 'Lỗi đăng nhập',
+                'message' => 'Sai số điện thoại hoặc mật khẩu',
                 'error' => $error,
-            ]);
+            ],Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

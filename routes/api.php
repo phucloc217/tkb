@@ -4,6 +4,7 @@ use App\Http\Controllers\LopHocController;
 use App\Http\Controllers\MonHocController;
 use App\Http\Controllers\NgayHocController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Models\MonhocNgayhoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/login', 'AuthController@login');
+Route::post('/login', [AuthController::class,'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/lophoc', LopHocController::class);
     Route::resource('/user', UserController::class);

@@ -12,25 +12,18 @@
                   <p class="mb-0">Vui lòng nhập Email và Mật khẩu để đăng nhập</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" method="post">
+
                     <div class="mb-3">
-                      <argon-input type="email" placeholder="Email" name="email" size="lg" />
+                      <input type="tel" class="form-control form-control-lg" placeholder="Số điện thoại" v-model="form.sdt" autocomplete="new-password">
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Mật khẩu" name="password" size="lg" />
+                      <input type="password" class="form-control form-control-lg" placeholder="Mật khẩu" v-model="form.password" autocomplete="new-password">
                     </div>
                     <argon-switch id="rememberMe">Ghi nhớ đăng nhập</argon-switch>
 
                     <div class="text-center">
-                      <argon-button
-                        class="mt-4"
-                        variant="gradient"
-                        color="success"
-                        fullWidth
-                        size="lg"
-                      >Đăng nhập</argon-button>
+                      <button class="btn btn-lg mt-4 bg-gradient-success w-100" :onClick="login">Đăng nhập</button>
                     </div>
-                  </form>
                 </div>
                 
               </div>
@@ -65,7 +58,7 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 const body = document.getElementsByTagName("body")[0];
-
+import { toast } from 'vue3-toastify';
 export default {
   name: "signin",
   components: {
@@ -74,7 +67,41 @@ export default {
     ArgonSwitch,
     ArgonButton,
   },
+  data() {
+    return {
+      form: {
+        sdt: '',
+        password: '',
+      },
+    }
+  },
+  methods:
+  {
+    async login()
+    {
+      let _THIS = this;
+      await axios.post(this.API_URL + '/login', this.form)
+        .then(function (res) {
+          try
+          {
+            window.sessionStorage.setItem('token', res.data.access_token);
+            _THIS.$router.push("/")
+            
+          }catch(error)
+          {
+            toast.error("Không thể đăng nhập lúc này", { theme: 'colored' })
+          }
+        })
+        .catch(function (err) {
+          toast.error(err.response.data.message, { theme: 'colored' })
+        });
+    }
+  },
+  mounted(){
+
+  },
   created() {
+
     this.$store.state.hideConfigButton = true;
     this.$store.state.showNavbar = false;
     this.$store.state.showSidenav = false;
@@ -82,6 +109,7 @@ export default {
     body.classList.remove("bg-gray-100");
   },
   beforeUnmount() {
+
     this.$store.state.hideConfigButton = false;
     this.$store.state.showNavbar = true;
     this.$store.state.showSidenav = true;
