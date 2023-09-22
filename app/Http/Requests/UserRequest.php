@@ -24,7 +24,8 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required',
             'ngaysinh' => 'date|required',
-            'email' => 'email|required|unique:users,email'
+            'email' => 'email|required|unique:users,email',
+            'sdt' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users,sdt'
         ];
     }
     public function messages()
@@ -35,8 +36,11 @@ class UserRequest extends FormRequest
             'ngaysinh.date'=>'Ngày sinh sai định dạng',
             'email.requỉed'=>'Bạn phải nhập email',
             'email.email'=>'Email sai định dạng',
-            'email.unique'=>'Email đã tồn tại'
-
+            'email.unique'=>'Email đã tồn tại',
+            'sdt.required'=>'Bạn phải nhập số điện thoại',
+            'sdt.regex'=>'Số điện thoại sai định dạng',
+            'sdt.min'=>'Số điện thoại sai định dạng',
+            'sdt.unique'=>'Số điện thoại đã tồn tại',
         ];
     }
 }
