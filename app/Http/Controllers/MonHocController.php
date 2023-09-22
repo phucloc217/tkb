@@ -5,23 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MonHocRequest;
 use App\Models\MonhocLop;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MonHocController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MonhocLop::leftJoin('users','monhoc_lop.idgv','users.id')->select('monhoc_lop.*','users.name')->get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        if (!$request->user()->can('view subject'))
+            return response()->json(['message' => 'Bạn không có quyền xem danh sách môn học'], Response::HTTP_UNAUTHORIZED);
+        return MonhocLop::leftJoin('users', 'monhoc_lop.idgv', 'users.id')->select('monhoc_lop.*', 'users.name')->get();
     }
 
     /**
@@ -29,6 +24,8 @@ class MonHocController extends Controller
      */
     public function store(MonHocRequest $request)
     {
+        if (!$request->user()->can('add subject'))
+            return response()->json(['message' => 'Bạn không có quyền thêm môn học'], Response::HTTP_UNAUTHORIZED);
         $monhoc = new MonhocLop();
         $monhoc->tenmh = $request->tenmh;
         $monhoc->sotiet = $request->sotiet;
@@ -43,7 +40,7 @@ class MonHocController extends Controller
      */
     public function show(string $id)
     {
-        return MonhocLop::leftJoin('users','monhoc_lop.idgv','users.id')->where('malop',"=",$id)->select('monhoc_lop.*','users.name')->get();
+        return MonhocLop::leftJoin('users', 'monhoc_lop.idgv', 'users.id')->where('malop', "=", $id)->select('monhoc_lop.*', 'users.name')->get();
     }
 
     /**
@@ -57,8 +54,10 @@ class MonHocController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
+        if (!$request->user()->can('delete subject'))
+            return response()->json(['message' => 'Bạn không có quyền xóa môn học'], Response::HTTP_UNAUTHORIZED);
         $monhoc = MonhocLop::find($id);
         return $monhoc->delete();
     }

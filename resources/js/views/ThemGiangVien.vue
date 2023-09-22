@@ -115,6 +115,7 @@ export default {
       this.postGiangVien();
     },
     async postGiangVien() {
+      let _THIS = this
       await axios.post(this.API_URL + '/user', this.form, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -124,14 +125,14 @@ export default {
 
           toast.success("Thêm thành công", { theme: 'colored' })
 
-          form.name = ''
-          form.ngaysinh = ''
-          form.hocham = 'K'
-          form.hocvi = 'CN'
-          form.diachi = ''
-          form.sdt = ''
-          form.email = ''
-          form.anh = []
+          _THIS.form.name = ''
+          _THIS.form.ngaysinh = ''
+          _THIS.form.hocham = 'K'
+          _THIS.form.hocvi = 'CN'
+          _THIS.form.diachi = ''
+          _THIS.form.sdt = ''
+          _THIS.form.email = ''
+          _THIS.form.anh = []
 
         })
         .catch(function (err) {

@@ -16,7 +16,7 @@ class AuthController extends Controller
                 'sdt' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'password' => 'required'
             ]);
-
+ 
             $credentials = request(['sdt', 'password']);
 
             if (!Auth::attempt($credentials)) {
@@ -25,7 +25,6 @@ class AuthController extends Controller
                     'message' => 'Unauthorized'
                 ],Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-
             $user = User::where('sdt', $request->sdt)->first();
  
             if (!Hash::check($request->password, $user->password, [])) {

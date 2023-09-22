@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 use Nette\Utils\DateTime;
+
+use Spatie\Permission\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
 use Intervention\Image\ImageManager;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -19,8 +21,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(!$request->user()->can('view teacher'))
+        return response()->json(['message' => 'Bạn không có quyền xem danh sách giảng viên'], Response::HTTP_UNAUTHORIZED);
         return User::all();
     }
 
@@ -29,6 +33,8 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        if(!$request->user()->can('add teacher'))
+            return response()->json(['message' => 'Bạn không có quyền thêm giảng viên'], Response::HTTP_UNAUTHORIZED);
         if ($request->get('anh')) {
             $image = $request->get('anh');
             $name = time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -60,6 +66,8 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, string $id)
     {
+        if(!$request->user()->can('update teacher'))
+        return response()->json(['message' => 'Bạn không có quyền sửa thông tin giảng viên'], Response::HTTP_UNAUTHORIZED);
         $user = User::find($id);
         $input = $request->all();
         $user->fill($input);
@@ -69,8 +77,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id,Request $request)
     {
+        if(!$request->user()->can('delete teacher'))
+        return response()->json(['message' => 'Bạn không có quyền xóa giảng viên'], Response::HTTP_UNAUTHORIZED);
         $user = User::where('id', '=', $id)->first;
         if (!$user->isEmpty())
             return $user->delete();
