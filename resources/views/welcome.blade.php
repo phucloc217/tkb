@@ -12,6 +12,7 @@
 <body>
     <div id="app"></div>
     @vite('resources/js/app.js')
+    {{-- <script type="module" src="{{url("assets/app-655ff770.js")}}"></script> --}}
 </body>
 
 </html>
