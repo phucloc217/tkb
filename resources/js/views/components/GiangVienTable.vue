@@ -40,8 +40,8 @@
                 <span class="text-secondary text-xs font-weight-bold">{{ giangvien.sdt }}</span>
               </td>
               <td class="align-middle">
-                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                  data-original-title="Edit user">Chỉnh sửa</a>
+                <router-link :to="{name: 'Update Giảng Viên', params: {id: giangvien.id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                  data-original-title="Edit user">Chỉnh sửa </router-link>
               </td>
             </tr>
 

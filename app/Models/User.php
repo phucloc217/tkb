@@ -38,7 +38,7 @@ class User  extends Authenticatable
 	public $incrementing = true;
 
 	protected $casts = [
-		'ngaysinh' => 'datetime',
+		
 		'email_verified_at' => 'datetime'
 	];
 

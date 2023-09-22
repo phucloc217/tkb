@@ -16,6 +16,11 @@ const routes = [
     component: () => import("./views/GiangVien.vue"),
   },
   {
+    path: "/giangvien/:id",
+    name: "Update Giảng Viên",
+    component: () => import("./views/UpdateGiangVien.vue"),
+  },
+  {
     path: "/xeptkb",
     name: "Xếp thời khóa biểu",
     component: () => import("./views/XepTKB.vue"),

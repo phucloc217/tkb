@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -27,6 +29,15 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::table('users')->insert(
+            array(
+                'name' => 'Nguyễn Phúc Lộc',
+                'ngaysinh' => '21-07-2001',
+                'sdt'=>'0384731507',
+                'email'=>'loc.nguyen456789@gmail.com',
+                'password'=>Hash::make('21072001')
+            )
+        );
     }
 
     /**
