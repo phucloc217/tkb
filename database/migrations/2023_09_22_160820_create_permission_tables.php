@@ -156,6 +156,7 @@ class CreatePermissionTables extends Migration
         $user->givePermissionTo('edit subject');
         $user->givePermissionTo('delete subject');
         $user->givePermissionTo('can make schedule');
+        $user->givePermissionTo('can change permisions');
     }
 
     /**
