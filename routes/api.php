@@ -25,4 +25,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/user', UserController::class);
     Route::resource('/ngayhoc', NgayHocController::class);
     Route::resource('/monhoc', MonHocController::class);
+    Route::resource('/phanquyen', MonHocController::class);
 });
