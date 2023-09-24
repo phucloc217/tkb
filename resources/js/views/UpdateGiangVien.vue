@@ -68,6 +68,45 @@
         </div>
 
       </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="mb-0"><b>Phân quyền</b></p>
+                <argon-button color="success" size="sm" class="ms-auto">Lưu</argon-button>
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-5">Tên quyền</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                      </th>
+
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="permission, index  in listPermisions">
+                      <td class="ps-5">
+                        <p class="text-xs font-weight-bold mb-0 text-capitalize">{{ permission.name }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <input type="checkbox" name="" id="" class="" :checked="userPermissions.includes(permission.name)">
+                      </td>
+                      
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -86,6 +125,8 @@ export default {
   data() {
     return {
       showMenu: false,
+      userPermissions:[],
+      listPermisions: [],
       user: '',
       form: {
         name: '',
@@ -108,6 +149,34 @@ export default {
   },
   components: { ArgonInput, ArgonButton },
   methods: {
+    async getPermisions() {
+      let _THIS = this
+      await axios.get(this.API_URL + '/phanquyen')
+        .then(function (res) {
+         
+          _THIS.listPermisions = res.data
+          console.log( _THIS.listPermisions)
+        })
+        .catch(function (err) {
+          console.log(err)
+          toast.error("Không thể lấy danh sách quyền", { theme: 'colored' })
+        })
+    },
+    async getUserPermisions() {
+      let _THIS = this
+      let id = _THIS.$router.currentRoute.value.params.id
+      await axios.get(this.API_URL + '/phanquyen/'+id)
+        .then(function (res) {
+
+          _THIS.userPermissions = res.data
+          console.log( _THIS.userPermissions )
+        })
+        .catch(function (err) {
+          console.log(err)
+          toast.error("Không thể lấy danh sách quyền", { theme: 'colored' })
+        })
+    },
+
     async getGiangVien() {
       let _THIS = this
       let id = _THIS.$router.currentRoute.value.params.id
@@ -136,7 +205,7 @@ export default {
     async patchGiangVien() {
       let _THIS = this
       let id = _THIS.$router.currentRoute.value.params.id
-      await axios.patch(this.API_URL + '/user/'+id, this.form, {
+      await axios.patch(this.API_URL + '/user/' + id, this.form, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Content-Type': 'application/json;charset=utf-8'
@@ -172,6 +241,8 @@ export default {
 
   mounted() {
     this.getGiangVien();
+    this.getPermisions();
+    this.getUserPermisions();
     // this.$store.state.isAbsolute = true;
     // setNavPills();
     setTooltip();

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Permission;
 class PermissionsController extends Controller
 {
     /**
@@ -11,7 +12,7 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        //
+        return Permission::select('name')->get();
     }
 
     /**
@@ -27,7 +28,13 @@ class PermissionsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+        $userPermissions = $user->getAllPermissions();
+        $Permissions = [];
+        foreach ($userPermissions as $item) {
+            array_push($Permissions, $item->name);
+        }
+        return $Permissions;
     }
 
     /**
