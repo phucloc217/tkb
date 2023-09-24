@@ -95,7 +95,7 @@
                         <p class="text-xs font-weight-bold mb-0 text-capitalize">{{ permission.name }}</p>
                       </td>
                       <td class="align-middle text-center">
-                        <input type="checkbox" name="" id="" class="" :checked="userPermissions.includes(permission.name)">
+                        <input type="checkbox" :value="permission.name" v-model="userPermissions">
                       </td>
                       
                     </tr>
@@ -119,13 +119,13 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import axios from "axios";
 const body = document.getElementsByTagName("body")[0];
-
+import {ref} from 'vue'
 export default {
   name: "them-giang-vien",
   data() {
     return {
       showMenu: false,
-      userPermissions:[],
+      userPermissions:ref([]),
       listPermisions: [],
       user: '',
       form: {
@@ -138,6 +138,7 @@ export default {
         email: '',
         anh: []
       },
+      formPermissions:ref([]),
       checkErrors: {
         name: false,
         ngaysinh: false,
@@ -238,8 +239,6 @@ export default {
     this.getGiangVien();
     this.getPermisions();
     this.getUserPermisions();
-    // this.$store.state.isAbsolute = true;
-    // setNavPills();
     setTooltip();
   },
 

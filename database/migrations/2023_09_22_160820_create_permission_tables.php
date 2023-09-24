@@ -141,6 +141,7 @@ class CreatePermissionTables extends Migration
         Permission::create(['name' => 'view subject']);
         Permission::create(['name' => 'delete subject']);
         Permission::create(['name' => 'can make schedule']);
+        Permission::create(['name' => 'can change permisions']);
         $user = User::where('sdt', '=', '0384731507')->first();
         $user->syncPermissions('view teacher');
         $user->givePermissionTo('edit teacher');
