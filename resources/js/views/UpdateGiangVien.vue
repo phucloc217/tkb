@@ -153,12 +153,9 @@ export default {
       let _THIS = this
       await axios.get(this.API_URL + '/phanquyen')
         .then(function (res) {
-         
           _THIS.listPermisions = res.data
-          console.log( _THIS.listPermisions)
         })
         .catch(function (err) {
-          console.log(err)
           toast.error("Không thể lấy danh sách quyền", { theme: 'colored' })
         })
     },
@@ -167,9 +164,7 @@ export default {
       let id = _THIS.$router.currentRoute.value.params.id
       await axios.get(this.API_URL + '/phanquyen/'+id)
         .then(function (res) {
-
           _THIS.userPermissions = res.data
-          console.log( _THIS.userPermissions )
         })
         .catch(function (err) {
           console.log(err)

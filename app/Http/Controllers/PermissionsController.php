@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Symfony\Component\HttpFoundation\Response;
 class PermissionsController extends Controller
 {
     /**
@@ -42,7 +43,11 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $status = $user->syncPermissions($request->permissions);
+        if ($status)
+            return response()->json("Cập nhật thành công",Response::HTTP_OK);
+        return response()->json("Cập nhật không thành công",Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
