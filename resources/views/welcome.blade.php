@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Xếp thời khóa biểu</title>
   <script src="{{url('/jquery.slim.min.js')}}"></script>
   <script src="{{url('/bootstrap.bundle.js')}}" ></script>
   {{-- <script src="{{url('/popper.js')}}" ></script> --}}

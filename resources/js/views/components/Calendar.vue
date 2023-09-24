@@ -68,9 +68,8 @@
 }
 </style>
 <script>
-import { ref } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
-import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
+import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import viLocale from '@fullcalendar/core/locales/vi'
 import axios from 'axios'
@@ -170,7 +169,7 @@ export default {
     },
     async postNgayHoc() {
       let _THIS = this
-      await axios.post(this.API_URL + '/ngayhoc/', this.form)
+      await axios.post(this.API_URL + '/ngayhoc', this.form)
         .then(function (response) {
           toast.success("Thêm thành công", { theme: 'colored' })
           _THIS.changeEventsSource()
