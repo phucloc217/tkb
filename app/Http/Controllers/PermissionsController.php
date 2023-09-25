@@ -45,6 +45,7 @@ class PermissionsController extends Controller
     {
         $user = User::find($id);
         $status = $user->syncPermissions($request->permissions);
+        return $user->getAllPermissions();
         if ($status)
             return response()->json("Cập nhật thành công",Response::HTTP_OK);
         return response()->json("Cập nhật không thành công",Response::HTTP_INTERNAL_SERVER_ERROR);

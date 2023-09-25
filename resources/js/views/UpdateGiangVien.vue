@@ -74,7 +74,7 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
                 <p class="mb-0"><b>Phân quyền</b></p>
-                <argon-button color="success" size="sm" class="ms-auto">Lưu</argon-button>
+                <argon-button color="success" size="sm" class="ms-auto" @click="patchPermisions">Lưu</argon-button>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -95,7 +95,7 @@
                         <p class="text-xs font-weight-bold mb-0 text-capitalize">{{ permission.name }}</p>
                       </td>
                       <td class="align-middle text-center">
-                        <input type="checkbox" :value="permission.name" v-model="userPermissions">
+                        <input type="checkbox" :value="permission.name" v-model="permissions">
                       </td>
                       
                     </tr>
@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      userPermissions:ref([]),
+      permissions:ref([]),
       listPermisions: [],
       user: '',
       form: {
@@ -160,12 +160,26 @@ export default {
           toast.error("Không thể lấy danh sách quyền", { theme: 'colored' })
         })
     },
+    async patchPermisions(){
+      let _THIS = this
+      console.log(_THIS.permissions)
+      let id = _THIS.$router.currentRoute.value.params.id
+      await axios.patch(this.API_URL+'/phanquyen/'+id,{permissions:_THIS.permissions})
+      .then(function (res){
+        console.log(res)
+          toast.success("Cập nhật quyền thành công",{ theme: 'colored' })
+      })
+      .catch(function(err){
+        console.log(err)
+        toast.error("Đã xảy ra lỗi",{ theme: 'colored' })
+      })
+    },
     async getUserPermisions() {
       let _THIS = this
       let id = _THIS.$router.currentRoute.value.params.id
       await axios.get(this.API_URL + '/phanquyen/'+id)
         .then(function (res) {
-          _THIS.userPermissions = res.data
+          _THIS.permissions = res.data
         })
         .catch(function (err) {
           console.log(err)
