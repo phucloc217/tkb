@@ -22,7 +22,7 @@ class AuthController extends Controller
             if (!Auth::attempt($credentials)) {
                 return response()->json([
                     'status_code' => 500,
-                    'message' => 'Unauthorized'
+                    'message' => 'Sai tên đăng nhập hoặc mật khẩu'
                 ],Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             $user = User::where('sdt', $request->sdt)->first();
