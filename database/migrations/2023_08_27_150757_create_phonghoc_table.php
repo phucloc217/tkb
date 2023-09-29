@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('phonghoc', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('tenphong', 20);
+            $table->integer('succhua')->default(0);
         });
     }
 

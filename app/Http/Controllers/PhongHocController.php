@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Phonghoc;
 use Illuminate\Http\Request;
 
 class PhongHocController extends Controller
@@ -11,15 +12,7 @@ class PhongHocController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Phonghoc::all();
     }
 
     /**
@@ -27,7 +20,7 @@ class PhongHocController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Phonghoc::create($request->all());
     }
 
     /**
@@ -35,15 +28,8 @@ class PhongHocController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $phonghoc = Phonghoc::find($id);
+        return $phonghoc;
     }
 
     /**
@@ -59,6 +45,7 @@ class PhongHocController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $phonghoc = Phonghoc::find($id);
+        return $phonghoc->delete();
     }
 }
