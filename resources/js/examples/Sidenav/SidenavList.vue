@@ -61,6 +61,17 @@
           </template>
         </sidenav-item>
       </li>
+      <li class="nav-item">
+        <sidenav-item
+          url="/phonghoc"
+          :class="getRoute() === 'monhoc' ? 'active' : ''"
+          :navText="this.$store.state.isRTL ? 'الجداول' : 'Quản lý phòng học'"
+        >
+          <template v-slot:icon>
+            <font-awesome-icon icon="fa-solid fa-city" class="text-dark text-sm opacity-10"/>
+          </template>
+        </sidenav-item>
+      </li>
      
       <li class="mt-3 nav-item">
         <h6

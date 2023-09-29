@@ -77,6 +77,16 @@ export default {
   {
     async login(e) {
       e.preventDefault();
+      if(this.form.sdt=='')
+      {
+        toast.error("Số điện thoại không được bỏ trống", { theme: 'colored' })
+        return
+      }
+      if(this.form.password=='')
+      {
+        toast.error("Mật khẩu không được bỏ trống", { theme: 'colored' })
+        return
+      }
       let _THIS = this;
       await axios.post(this.API_URL + '/login', this.form)
         .then(function (res) {

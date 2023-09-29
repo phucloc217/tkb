@@ -36,6 +36,11 @@ const routes = [
     component: () => import("./views/MonHoc.vue"),
   },
   {
+    path: "/phonghoc",
+    name: "Quản lý phòng học",
+    component: () => import("./views/PhongHoc.vue"),
+  },
+  {
     path: "/dangnhap",
     name: "Đăng nhập",
     component: Signin,
