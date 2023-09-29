@@ -128,20 +128,20 @@ class CreatePermissionTables extends Migration
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
 
-        Permission::create(['name' => 'view teacher']);
-        Permission::create(['name' => 'add teacher']);
-        Permission::create(['name' => 'edit teacher']);
-        Permission::create(['name' => 'delete teacher']);
-        Permission::create(['name' => 'view class']);
-        Permission::create(['name' => 'edit class']);
-        Permission::create(['name' => 'add class']);
-        Permission::create(['name' => 'delete class']);
-        Permission::create(['name' => 'add subject']);
-        Permission::create(['name' => 'edit subject']);
-        Permission::create(['name' => 'view subject']);
-        Permission::create(['name' => 'delete subject']);
-        Permission::create(['name' => 'can make schedule']);
-        Permission::create(['name' => 'can change permisions']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'view teacher']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'add teacher']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'edit teacher']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'delete teacher']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'view class']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'edit class']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'add class']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'delete class']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'add subject']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'edit subject']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'view subject']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'delete subject']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'can make schedule']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'can change permisions']);
         $user = User::where('sdt', '=', '0384731507')->first();
         $user->syncPermissions('view teacher');
         $user->givePermissionTo('edit teacher');

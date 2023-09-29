@@ -3,7 +3,7 @@
 
 <head>
     <title>Xếp thời khóa biểu</title>
-    <link rel="stylesheet" href="{{url("build/assets/app-484413a9.css")}}">
+    {{-- <link rel="stylesheet" href="{{url("build/assets/app-484413a9.css")}}"> --}}
   <script src="{{url('/jquery.slim.min.js')}}"></script>
   <script src="{{url('/bootstrap.bundle.js')}}" ></script>
   {{-- <script src="{{url('/popper.js')}}" ></script> --}}
@@ -14,13 +14,13 @@
         jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():0 !!}
     }
 </script>
-    {{-- @vite('resources/css/app.css') --}}
+    @vite('resources/css/app.css')
 </head>
 
 <body>
     <div id="app"></div>
-    {{-- @vite('resources/js/app.js') --}}
-    <script type="module" src="{{url("build/assets/app-f948fe33.js")}}"></script>
+    @vite('resources/js/app.js')
+    {{-- <script type="module" src="{{url("build/assets/app-f948fe33.js")}}"></script> --}}
 </body>
 
 </html>
