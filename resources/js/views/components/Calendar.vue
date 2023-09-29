@@ -48,6 +48,13 @@
               </select>
 
             </div>
+            <div class="">
+              <label for="example-text-input" class="form-control-label">Phòng học</label>
+              <select name="buoihoc" id="buoihoc" class="form-select">
+                <option v-for="phonghoc in listPhongHoc" :value="phonghoc.id">{{ phonghoc.tenphong }} - {{ phonghoc.succhua }}</option>
+              </select>
+
+            </div>
 
           </div>
           <div class="modal-footer">
@@ -101,6 +108,7 @@ export default {
       start: '',
       listMonHoc: null,
       listLopHoc: null,
+      listPhongHoc:null,
       calendarOptions: {
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek',
@@ -244,11 +252,20 @@ export default {
           )
           return 0;
         })
-    }
+    },
+    async getPhongHoc() {
+      let _THIS = this
+      await axios.get(this.API_URL + '/phonghoc/' + this.id_lophoc)
+        .then(function (response) {
+          _THIS.listPhongHoc = response.data
+        })
+        .catch(function (err) {
+          toast.error("Không thể lấy danh sách phòng học", { theme: 'colored' })
+        });
+    },
   },
   mounted() {
     this.getLopHoc();
-
   }
 }
 </script>
