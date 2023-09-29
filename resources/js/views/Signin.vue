@@ -1,48 +1,46 @@
 <template>
-
   <main class="mt-0 main-content">
     <section>
       <div class="page-header min-vh-100">
         <div class="container">
           <div class="row">
             <div class="mx-auto col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0">
-              <div class="card card-plain">
-                <div class="pb-0 card-header text-start">
-                  <h4 class="font-weight-bolder">Đăng nhập</h4>
-                  <p class="mb-0">Vui lòng nhập Email và Mật khẩu để đăng nhập</p>
-                </div>
-                <div class="card-body">
+              <form action="" @submit="login">
+                <div class="card card-plain">
+                  <div class="pb-0 card-header text-start">
+                    <h4 class="font-weight-bolder">Đăng nhập</h4>
+                    <p class="mb-0">Vui lòng nhập Email và Mật khẩu để đăng nhập</p>
+                  </div>
+                  <div class="card-body">
 
                     <div class="mb-3">
-                      <input type="tel" class="form-control form-control-lg" placeholder="Số điện thoại" v-model="form.sdt" autocomplete="new-password">
+                      <input type="tel" class="form-control form-control-lg" placeholder="Số điện thoại"
+                        v-model="form.sdt" autocomplete="new-password">
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Mật khẩu" v-model="form.password" autocomplete="new-password">
+                      <input type="password" class="form-control form-control-lg" placeholder="Mật khẩu"
+                        v-model="form.password" autocomplete="new-password">
                     </div>
                     <argon-switch id="rememberMe">Ghi nhớ đăng nhập</argon-switch>
 
                     <div class="text-center">
-                      <button class="btn btn-lg mt-4 bg-gradient-success w-100" :onClick="login">Đăng nhập</button>
+                      <button class="btn btn-lg mt-4 bg-gradient-success w-100" type="submit">Đăng nhập</button>
                     </div>
+                  </div>
+
                 </div>
-                
-              </div>
+              </form>
             </div>
             <div
-              class="top-0 my-auto text-center col-6 d-lg-flex d-none h-100 pe-0 position-absolute end-0 justify-content-center flex-column"
-            >
+              class="top-0 my-auto text-center col-6 d-lg-flex d-none h-100 pe-0 position-absolute end-0 justify-content-center flex-column">
               <div
                 class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-          background-size: cover;"
-              >
+          background-size: cover;">
                 <span class="mask bg-gradient-success opacity-6"></span>
-                <h4
-                  class="mt-5 text-white font-weight-bolder position-relative"
-                >"Attention is the new currency"</h4>
-                <p
-                  class="text-white position-relative"
-                >The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
+                <p class="text-white position-relative">The more effortless the writing looks, the more effort the writer
+                  actually put into the process.</p>
               </div>
             </div>
           </div>
@@ -77,18 +75,16 @@ export default {
   },
   methods:
   {
-    async login()
-    {
+    async login(e) {
+      e.preventDefault();
       let _THIS = this;
       await axios.post(this.API_URL + '/login', this.form)
         .then(function (res) {
-          try
-          {
+          try {
             window.sessionStorage.setItem('token', res.data.access_token);
             _THIS.$router.push("/")
-            
-          }catch(error)
-          {
+
+          } catch (error) {
             toast.error("Không thể đăng nhập lúc này", { theme: 'colored' })
           }
         })
@@ -97,7 +93,7 @@ export default {
         });
     }
   },
-  mounted(){
+  mounted() {
 
   },
   created() {
