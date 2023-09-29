@@ -23,5 +23,5 @@ app.use(store);
 app.use(ArgonDashboard);
 app.use(VueSweetalert2);
 app.component('font-awesome-icon', FontAwesomeIcon)
-app.config.globalProperties.API_URL='http://localhost/api'
+app.config.globalProperties.API_URL='http://127.0.0.1:8000/api'
 app.mount("#app")
