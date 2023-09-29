@@ -12,28 +12,26 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lớp học</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Khóa</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sĩ số</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phòng học</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sức chứa</th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="lophoc, index  in listLopHoc">
+            <tr v-for="phonghoc, index  in listPhongHoc">
               <td>
                 <div class="d-flex px-2 py-1">
 
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{ lophoc.id }}</h6>
-                    <p class="text-xs text-secondary mb-0">{{ lophoc.tenlop }}</p>
+                    <h6 class="mb-0 text-sm">{{ index+1 }}</h6>
+                    <p class="text-xs text-secondary mb-0">{{ phonghoc.tenphong }}</p>
                   </div>
                 </div>
               </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">{{ lophoc.khoahoc }}</p>
-              </td>
+
               <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{ lophoc.siso }}</span>
+                <span class="text-secondary text-xs font-weight-bold">{{ phonghoc.succhua }}</span>
               </td>
               <td class="align-middle">
                 <span class="m-3"> <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
@@ -103,7 +101,7 @@ export default {
   },
   data() {
     return {
-      listLopHoc: {},
+      listPhongHoc: {},
       form: {
         id: null,
         tenlop: null,
@@ -113,9 +111,9 @@ export default {
     }
   },
   methods: {
-    async getLopHoc() {
+    async getPhongHoc() {
       let _THIS = this;
-      await axios.get(this.API_URL + '/lophoc', {
+      await axios.get(this.API_URL + '/phonghoc', {
         headers: {
           'Authorization': 'Token ' + window.sessionStorage.getItem('token'),
           'Content-Type': 'application/json; charset=utf-8',
@@ -123,16 +121,16 @@ export default {
         }
       })
         .then(function (response) {
-          _THIS.listLopHoc = response.data
+          _THIS.listPhongHoc = response.data
         })
         .catch(function (err) {
           // console.log(err)
           toast.error("Đã xảy ra lỗi", { theme: 'colored' })
         });
     },
-    async postLopHoc() {
+    async postPhongHoc() {
       let _THIS = this;
-      await axios.post(this.API_URL + '/lophoc', this.form)
+      await axios.post(this.API_URL + '/phonghoc', this.form)
         .then(function () {
           toast.success("Thêm lớp học thành công", { theme: 'colored' }),
             _THIS.form.id = null,
@@ -147,7 +145,7 @@ export default {
         });
     },
 
-    async deleteLopHoc(id) {
+    async deletePhongHoc(id) {
       await axios.delete(this.API_URL + '/lophoc/' + id, { data: { id: id } })
         .then(function () {
           toast.success("Xóa lớp học thành công", { theme: 'colored' })
