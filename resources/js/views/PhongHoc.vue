@@ -10,12 +10,10 @@
 
 <script>
 import PhongHocTable from "./components/PhongHocTable.vue"; ;
-import ArgonInput from "@/components/ArgonInput.vue";
 export default {
   name: "phonghoc",
   components: {
     PhongHocTable,
-    ArgonInput
   },
   data() {
     return {
