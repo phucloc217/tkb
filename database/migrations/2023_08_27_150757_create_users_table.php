@@ -32,7 +32,7 @@ return new class extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'Nguyễn Phúc Lộc',
-                'ngaysinh' => '21-07-2001',
+                'ngaysinh' => '2001-07-21',
                 'sdt'=>'0384731507',
                 'email'=>'loc.nguyen456789@gmail.com',
                 'password'=>Hash::make('21072001')
