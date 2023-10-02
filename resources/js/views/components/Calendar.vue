@@ -42,7 +42,7 @@
             </div>
             <div class="">
               <label for="example-text-input" class="form-control-label">Buổi</label>
-              <select name="buoihoc" id="buoihoc" class="form-select">
+              <select name="buoihoc" id="buoihoc" class="form-select" :on-change="getPhongHoc()">
                 <option value="7:30:00" class="">Sáng</option>
                 <option value="13:00:00" class="">Chiều</option>
               </select>
