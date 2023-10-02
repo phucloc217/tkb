@@ -13,7 +13,7 @@
           <thead>
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên phòng học</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sức chứa</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Sức chứa</th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
@@ -28,7 +28,7 @@
                 </div>
               </td>
               <td>
-                <p class="text-xs font-weight-bold mb-0">{{ phonghoc.succhua }}</p>
+                <p class="text-xs font-weight-bold mb-0 text-center">{{ phonghoc.succhua }}</p>
               </td>
             
               <td class="align-middle">
