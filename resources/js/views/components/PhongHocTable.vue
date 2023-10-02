@@ -12,29 +12,25 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên phòng</th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sĩ số</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên phòng học</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sức chứa</th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="lophoc, index  in listLopHoc">
+            <tr v-for="phonghoc  in listPhongHoc">
               <td>
                 <div class="d-flex px-2 py-1">
 
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{ lophoc.id }}</h6>
-                    <p class="text-xs text-secondary mb-0">{{ lophoc.tenlop }}</p>
+                    <h6 class="mb-0 text-sm">{{ phonghoc.tenphong }}</h6>
                   </div>
                 </div>
               </td>
               <td>
-                <p class="text-xs font-weight-bold mb-0">{{ lophoc.khoahoc }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ phonghoc.succhua }}</p>
               </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{ lophoc.siso }}</span>
-              </td>
+            
               <td class="align-middle">
                 <span class="m-3"> <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                     data-toggle="tooltip" data-original-title="Edit class">Chỉnh sửa</a></span>
@@ -55,7 +51,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Thêm lớp học</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Thêm phòng học</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -103,19 +99,17 @@ export default {
   },
   data() {
     return {
-      listLopHoc: {},
+      listPhongHoc: {},
       form: {
-        id: null,
-        tenlop: null,
-        siso: 0,
-        khoahoc: 0
+        tenphong: null,
+        succhua: null
       },
     }
   },
   methods: {
-    async getLopHoc() {
+    async getPhongHoc() {
       let _THIS = this;
-      await axios.get(this.API_URL + '/lophoc', {
+      await axios.get(this.API_URL + '/phonghoc', {
         headers: {
           'Authorization': 'Token ' + window.sessionStorage.getItem('token'),
           'Content-Type': 'application/json; charset=utf-8',
@@ -123,23 +117,21 @@ export default {
         }
       })
         .then(function (response) {
-          _THIS.listLopHoc = response.data
+          _THIS.listPhongHoc = response.data
         })
         .catch(function (err) {
           // console.log(err)
-          toast.error("Đã xảy ra lỗi", { theme: 'colored' })
+          toast.error(err.response.data, { theme: 'colored' })
         });
     },
-    async postLopHoc() {
+    async postPhongHoc() {
       let _THIS = this;
-      await axios.post(this.API_URL + '/lophoc', this.form)
+      await axios.post(this.API_URL + '/phonghoc', this.form)
         .then(function () {
           toast.success("Thêm lớp học thành công", { theme: 'colored' }),
-            _THIS.form.id = null,
-            _THIS.form.tenlop = null,
-            _THIS.form.siso = 0,
-            _THIS.form.khoahoc = 0
-          _THIS.getLopHoc();
+            _THIS.form.tenphong = '',
+            _THIS.form.succhua = 0
+          _THIS.getPhongHoc();
         })
         .catch(function (err) {
           console.log(err)
@@ -147,10 +139,10 @@ export default {
         });
     },
 
-    async deleteLopHoc(id) {
-      await axios.delete(this.API_URL + '/lophoc/' + id, { data: { id: id } })
+    async deletePhongHoc(id) {
+      await axios.delete(this.API_URL + '/phonghoc/' + id, { data: { id: id } })
         .then(function () {
-          toast.success("Xóa lớp học thành công", { theme: 'colored' })
+          toast.success("Xóa phòng học thành công", { theme: 'colored' })
         })
         .catch(function (err) {
           console.log(err)
@@ -160,7 +152,7 @@ export default {
     btnDelete(id) {
 
       this.$swal({
-        title: 'Xóa lớp ' + id,
+        title: 'Xóa phòng học ',
         text: "Bạn sẽ không thể hoàn tác thao tác này",
         icon: 'warning',
         showCancelButton: true,
@@ -170,8 +162,8 @@ export default {
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          this.deleteLopHoc(id)
-          this.getLopHoc()
+          this.deletePhongHoc(id)
+          this.getPhongHoc()
           // this.$swal(
           //   'Deleted!',
           //   'Your file has been deleted.',
@@ -182,7 +174,7 @@ export default {
     }
   },
   mounted() {
-    this.getLopHoc();
+    this.getPhongHoc();
   },
 };
 </script>
