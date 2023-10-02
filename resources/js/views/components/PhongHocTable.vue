@@ -115,13 +115,12 @@ export default {
       let _THIS = this;
       await axios.post(this.API_URL + '/phonghoc', this.form)
         .then(function () {
-          toast.success("Thêm lớp học thành công", { theme: 'colored' }),
+          toast.success("Thêm phòng học thành công", { theme: 'colored' }),
             _THIS.form.tenphong = '',
             _THIS.form.succhua = 0
           _THIS.getPhongHoc();
         })
         .catch(function (err) {
-          console.log(err)
           toast.error("Đã xảy ra lỗi", { theme: 'colored' })
         });
     },
