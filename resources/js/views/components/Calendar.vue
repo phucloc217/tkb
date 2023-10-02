@@ -42,15 +42,15 @@
             </div>
             <div class="">
               <label for="example-text-input" class="form-control-label">Buổi</label>
-              <select name="buoihoc" id="buoihoc" class="form-select" >
-                <option value="7:30:00" class="">Sáng</option>
+              <select name="buoihoc" id="buoihoc" class="form-select" @change="getPhongHoc()" v-model="this.time">
+                <option value="7:30:00" class="" >Sáng</option>
                 <option value="13:00:00" class="">Chiều</option>
               </select>
 
             </div>
             <div class="">
               <label for="example-text-input" class="form-control-label">Phòng học</label>
-              <select name="buoihoc" id="buoihoc" class="form-select">
+              <select name="phonghoc" id="phonghoc" class="form-select" v-model="form.maphong">
                 <option v-for="phonghoc in listPhongHoc" :value="phonghoc.id">{{ phonghoc.tenphong }} - {{ phonghoc.succhua }}</option>
               </select>
 
@@ -100,12 +100,13 @@ export default {
         start: null,
         end: null,
         id_monhoc: null,
-
+        maphong:null
       },
       id_mh: null,
       id_lophoc: '',
       ngayhoc: '',
       start: '',
+      time:null,
       listMonHoc: null,
       listLopHoc: null,
       listPhongHoc:null,
@@ -136,7 +137,7 @@ export default {
         eventContent: function (arg) {
           let italicEl = document.createElement('div')
           italicEl.classList.add("item-event-tkb")
-          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description + "<br/>" +"Phòng: "+arg.event._def.extendedProps.phong
           let arrayOfDomNodes = [italicEl]
           return { domNodes: arrayOfDomNodes }
         },

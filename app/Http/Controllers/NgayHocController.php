@@ -32,6 +32,7 @@ class NgayHocController extends Controller
             return response()->json(['message' => "Giảng viên này đã có tiết vào buổi này tại lớp " . $check[0]->malop], Response::HTTP_INTERNAL_SERVER_ERROR);
         $ngayhoc = new MonhocNgayhoc();
         $ngayhoc->id_monhoc = $request->id_monhoc;
+        $ngayhoc->maphong = $request->maphong;
         date($request->start);
         $ngayhoc->start = date("Y-m-d H:i:s", strtotime($request->start));
         $ngayhoc->end = date("Y-m-d H:i:s", strtotime($request->end));
@@ -45,7 +46,7 @@ class NgayHocController extends Controller
      */
     public function show(string $id)
     {
-        return MonhocNgayhoc::leftJoin('monhoc_lop', 'monhoc_ngayhoc.id_monhoc', 'monhoc_lop.id')->leftJoin('users', 'monhoc_lop.idgv', 'users.id')->where('id_monhoc', '=', $id)->select('monhoc_lop.tenmh as title', 'monhoc_ngayhoc.*', 'users.name as description')->get();
+        return MonhocNgayhoc::leftJoin('monhoc_lop', 'monhoc_ngayhoc.id_monhoc', 'monhoc_lop.id')->leftJoin('users', 'monhoc_lop.idgv', 'users.id')->leftJoin('phonghoc','monhoc_ngayhoc.maphong','phonghoc.id')->where('id_monhoc', '=', $id)->select('monhoc_lop.tenmh as title', 'monhoc_ngayhoc.*', 'users.name as description','phonghoc.tenphong as phong')->get();
     }
 
     /**
