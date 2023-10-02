@@ -56,30 +56,17 @@
         </div>
         <div class="modal-body">
           <div class="">
-            <label for="example-text-input" class="form-control-label">Mã lớp</label>
-            <input class="form-control" type="text" name="id" v-model="this.form.id" />
+            <label for="example-text-input" class="form-control-label">Tên phòng</label>
+            <input class="form-control" type="text" name="id" v-model="this.form.tenphong" />
           </div>
           <div class="">
-            <label for="example-text-input" class="form-control-label">Ngành</label>
-            <select name="tenlop" id="tenlop" class="form-select" v-model="this.form.tenlop">
-              <option value="Quản trị mạng máy tính">Quản trị mạng máy tính</option>
-              <option value="Tin học văn phòng">Tin học văn phòng</option>
-              <option value="Kĩ thuật lắp ráp & sửa chữa máy tính">Kĩ thuật lắp ráp & sửa chữa máy tính</option>
-            </select>
-
-          </div>
-          <div class="">
-            <label for="example-text-input" class="form-control-label">Sĩ số</label>
-            <input class="form-control" type="number" name="siso" v-model="this.form.siso" />
-          </div>
-          <div class="">
-            <label for="example-text-input" class="form-control-label">Khóa học</label>
-            <input class="form-control" type="number" name="khoahoc" v-model="this.form.khoahoc" />
+            <label for="example-text-input" class="form-control-label">Sức chứa</label>
+            <input class="form-control" type="number" name="siso" v-model="this.form.succhua" />
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary" @click="postLopHoc()">Lưu</button>
+          <button type="button" class="btn btn-primary" @click="postPhongHoc()">Lưu</button>
         </div>
       </div>
     </div>
@@ -101,8 +88,8 @@ export default {
     return {
       listPhongHoc: {},
       form: {
-        tenphong: null,
-        succhua: null
+        tenphong: '',
+        succhua: 0
       },
     }
   },
@@ -164,11 +151,6 @@ export default {
         if (result.isConfirmed) {
           this.deletePhongHoc(id)
           this.getPhongHoc()
-          // this.$swal(
-          //   'Deleted!',
-          //   'Your file has been deleted.',
-          //   'success'
-          // )
         }
       });
     }
