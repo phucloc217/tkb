@@ -42,7 +42,7 @@
             </div>
             <div class="">
               <label for="example-text-input" class="form-control-label">Buổi</label>
-              <select name="buoihoc" id="buoihoc" class="form-select" :on-change="getPhongHoc()">
+              <select name="buoihoc" id="buoihoc" class="form-select" >
                 <option value="7:30:00" class="">Sáng</option>
                 <option value="13:00:00" class="">Chiều</option>
               </select>
@@ -255,7 +255,12 @@ export default {
     },
     async getPhongHoc() {
       let _THIS = this
-      await axios.get(this.API_URL + '/phonghoc/' + this.id_lophoc)
+      let time = $("#ngayhoc").val();
+      let gio = $("#buoihoc").val();
+      gio = gio.split(":")
+      let bd = moment(time, "DD-MM-YYYY HH:mm:ss").set({ hour: gio[0], minute: gio[1], second: 0, millisecond: 0 })
+      let start = bd.toISOString(true)
+      await axios.get(this.API_URL + '/getphonghocbydate/'+start)
         .then(function (response) {
           _THIS.listPhongHoc = response.data
         })

@@ -142,7 +142,7 @@ class CreatePermissionTables extends Migration
         Permission::create(['guard_name' => 'sanctum','name' => 'delete subject']);
         Permission::create(['guard_name' => 'sanctum','name' => 'can make schedule']);
         Permission::create(['guard_name' => 'sanctum','name' => 'can change permisions']);
-        $user = User::where('sdt', '=', '0*')->first();
+        $user = User::find(1);
         $user->givePermissionTo('view teacher');
         $user->givePermissionTo('edit teacher');
         $user->givePermissionTo('delete teacher');

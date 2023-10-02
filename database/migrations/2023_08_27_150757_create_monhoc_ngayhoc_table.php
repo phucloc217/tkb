@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('monhoc_ngayhoc', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->date('ngayhoc')->nullable();
             $table->integer('id_monhoc')->nullable()->index('id_monhoc');
             $table->integer('maphong')->nullable()->index('maphong');
             $table->dateTime('start');

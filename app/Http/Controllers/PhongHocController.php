@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MonhocNgayhoc;
 use App\Models\Phonghoc;
 use Illuminate\Http\Request;
 
@@ -47,5 +48,17 @@ class PhongHocController extends Controller
     {
         $phonghoc = Phonghoc::find($id);
         return $phonghoc->delete();
+    }
+    public function getPhongHocByDate($start) {
+       
+        $arrPhongHoc =[];
+        $tmp = MonhocNgayhoc::where('start','=',$start)->select('maphong')->get();
+        $tmp_arr=[];
+        foreach($tmp as $k=>$v)
+        {
+            array_push($tmp_arr,$v->maphong);
+        }
+        $arrPhongHoc = Phonghoc::whereNotIn('id',$tmp_arr)->get();
+        return $arrPhongHoc;
     }
 }
