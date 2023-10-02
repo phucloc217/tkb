@@ -6,6 +6,7 @@ use App\Http\Controllers\NgayHocController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\PhongHocController;
 use App\Models\MonhocNgayhoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/ngayhoc', NgayHocController::class);
     Route::resource('/monhoc', MonHocController::class);
     Route::resource('/phanquyen', PermissionsController::class);
+    Route::resource('/phonghoc', PhongHocController::class);
 });

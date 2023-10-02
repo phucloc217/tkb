@@ -25,7 +25,8 @@ class Phonghoc extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'tenphong'
+		'tenphong',
+		'succhua'
 	];
 
 	public function monhoc_ngayhocs()
