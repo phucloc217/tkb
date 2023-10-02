@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header pb-0">
       <div class="d-flex align-items-center">
-        <h6>Danh sách lớp học</h6>
+        <h6>Danh sách phòng học</h6>
         <argon-button color="success" size="sm" class="ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm
           Phòng học</argon-button>
       </div>
