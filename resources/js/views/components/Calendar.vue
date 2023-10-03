@@ -43,7 +43,7 @@
             <div class="">
               <label for="example-text-input" class="form-control-label">Buổi</label>
               <select name="buoihoc" id="buoihoc" class="form-select" @change="getPhongHoc()" v-model="this.time">
-                <option value="7:30:00" class="" >Sáng</option>
+                <option value="7:30:00" class="">Sáng</option>
                 <option value="13:00:00" class="">Chiều</option>
               </select>
 
@@ -51,7 +51,8 @@
             <div class="">
               <label for="example-text-input" class="form-control-label">Phòng học</label>
               <select name="phonghoc" id="phonghoc" class="form-select" v-model="form.maphong">
-                <option v-for="phonghoc in listPhongHoc" :value="phonghoc.id">{{ phonghoc.tenphong }} - {{ phonghoc.succhua }}</option>
+                <option v-for="phonghoc in listPhongHoc" :value="phonghoc.id">{{ phonghoc.tenphong }} - {{
+                  phonghoc.succhua }}</option>
               </select>
 
             </div>
@@ -100,16 +101,16 @@ export default {
         start: null,
         end: null,
         id_monhoc: null,
-        maphong:null
+        maphong: null
       },
       id_mh: null,
       id_lophoc: '',
       ngayhoc: '',
       start: '',
-      time:null,
+      time: null,
       listMonHoc: null,
       listLopHoc: null,
-      listPhongHoc:null,
+      listPhongHoc: null,
       calendarOptions: {
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek',
@@ -137,7 +138,7 @@ export default {
         eventContent: function (arg) {
           let italicEl = document.createElement('div')
           italicEl.classList.add("item-event-tkb")
-          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description + "<br/>" +"Phòng: "+arg.event._def.extendedProps.phong
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description + "<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
           let arrayOfDomNodes = [italicEl]
           return { domNodes: arrayOfDomNodes }
         },
@@ -181,6 +182,12 @@ export default {
       await axios.post(this.API_URL + '/ngayhoc', this.form)
         .then(function (response) {
           toast.success("Thêm thành công", { theme: 'colored' })
+          _THIS.form.start = null
+          _THIS.form.end = null
+          _THIS.form.id_monhoc = null
+          _THIS.form.maphong = null
+          _THIS.time = null
+          _THIS.id_mh = null
           _THIS.changeEventsSource()
         }).
         catch(function (err) {
@@ -206,8 +213,8 @@ export default {
           _THIS.listLopHoc = response.data
         })
         .catch(function (err) {
-          if(err.data!=null)
-          toast.error("Không thể lấy danh sách lớp học", { theme: 'colored' })
+          if (err.data != null)
+            toast.error("Không thể lấy danh sách lớp học", { theme: 'colored' })
         });
     },
     async changeEventsSource() {
@@ -236,7 +243,7 @@ export default {
     async deleteEvent(event) {
       let _THIS = this
       let id = event._def.publicId
-      await axios.delete(this.API_URL+'/ngayhoc/'+id,{ data: { id: id } })
+      await axios.delete(this.API_URL + '/ngayhoc/' + id, { data: { id: id } })
         .then(function (respone) {
           Swal.fire(
             'Xóa thành công!',
@@ -245,7 +252,7 @@ export default {
           )
           event.remove()
         })
-        .catch(function (err){
+        .catch(function (err) {
           Swal.fire(
             'Đã xảy ra lỗi!',
             'Không thể xóa lịch học',
@@ -261,7 +268,7 @@ export default {
       gio = gio.split(":")
       let bd = moment(time, "DD-MM-YYYY HH:mm:ss").set({ hour: gio[0], minute: gio[1], second: 0, millisecond: 0 })
       let start = bd.toISOString(true)
-      await axios.get(this.API_URL + '/getphonghocbydate/'+start)
+      await axios.get(this.API_URL + '/getphonghocbydate/' + start)
         .then(function (response) {
           _THIS.listPhongHoc = response.data
         })
