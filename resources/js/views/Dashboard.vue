@@ -1,95 +1,79 @@
 <template>
-  <div class="py-4 container-fluid">
-    
+  <div class="row me-0 ps-1">
+    <div class="col-12 p-1">
+      <div class="card p-3">
+        <div class="card-body p-1">
+          <FullCalendar :options="calendarOptions" ref="calendar" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import Card from "@/examples/Cards/Card.vue";
-import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
-import Carousel from "./components/Carousel.vue";
-import CategoriesCard from "./components/CategoriesCard.vue";
-
-import US from "@/assets/img/icons/flags/US.png";
-import DE from "@/assets/img/icons/flags/DE.png";
-import GB from "@/assets/img/icons/flags/GB.png";
-import BR from "@/assets/img/icons/flags/BR.png";
-
+import FullCalendar from '@fullcalendar/vue3'
+import interactionPlugin from '@fullcalendar/interaction'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import viLocale from '@fullcalendar/core/locales/vi'
 export default {
+
   name: "dashboard-default",
   data() {
     return {
-      stats: {
-        money: {
-          title: "Today's Money",
-          value: "$53,000",
-          percentage: "+55%",
-          iconClass: "ni ni-money-coins",
-          detail: "since yesterday",
-          iconBackground: "bg-gradient-primary",
+      calendarOptions: {
+        plugins: [timeGridPlugin, interactionPlugin],
+        initialView: 'timeGridWeek',
+        headerToolbar: [
+
+        ],
+        events: {
         },
-        users: {
-          title: "Today's Users",
-          value: "2,300",
-          percentage: "+3%",
-          iconClass: "ni ni-world",
-          iconBackground: "bg-gradient-danger",
-          detail: "since last week",
+        locale: viLocale,
+        slotMinTime: "07:30:00",
+        slotMaxTime: "17:00:00",
+        eventMinHeight: 30,
+        allDaySlot: false,
+        height: 500,
+        editable: true,
+        droppable: true,
+        eventColor: '#ed8936',
+        eventTextColor: 'white',
+        businessHours: {
+          daysOfWeek: [1, 2, 3, 4, 5, 6],
+          startTime: '07:30',
+          endTime: '16:15',
         },
-        clients: {
-          title: "New Clients",
-          value: "+3,462",
-          percentage: "-2%",
-          iconClass: "ni ni-paper-diploma",
-          percentageColor: "text-danger",
-          iconBackground: "bg-gradient-success",
-          detail: "since last quarter",
+        hiddenDays: [0],
+        eventContent: function (arg) {
+          let italicEl = document.createElement('div')
+          italicEl.classList.add("item-event-tkb")
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description + "<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
+          let arrayOfDomNodes = [italicEl]
+          return { domNodes: arrayOfDomNodes }
         },
-        sales: {
-          title: "Sales",
-          value: "$103,430",
-          percentage: "+5%",
-          iconClass: "ni ni-cart",
-          iconBackground: "bg-gradient-warning",
-          detail: "than last month",
+        dateClick: function (date, jsEvent, view) {
+          // vm.showModal(date)
         },
-      },
-      sales: {
-        us: {
-          country: "United States",
-          sales: 2500,
-          value: "$230,900",
-          bounce: "29.9%",
-          flag: US,
-        },
-        germany: {
-          country: "Germany",
-          sales: "3.900",
-          value: "$440,000",
-          bounce: "40.22%",
-          flag: DE,
-        },
-        britain: {
-          country: "Great Britain",
-          sales: "1.400",
-          value: "$190,700",
-          bounce: "23.44%",
-          flag: GB,
-        },
-        brasil: {
-          country: "Brasil",
-          sales: "562",
-          value: "$143,960",
-          bounce: "32.14%",
-          flag: BR,
-        },
-      },
-    };
+        eventClick: function (info) {
+          // Swal.fire({
+          //   title: 'Xóa lịch ',
+          //   text: "Bạn sẽ không thể hoàn tác thao tác này",
+          //   icon: 'warning',
+          //   showCancelButton: true,
+          //   confirmButtonText: 'Xóa',
+          //   confirmButtonColor: '#00FFFF',
+          //   cancelButtonText: 'Đóng',
+          //   reverseButtons: true
+          // }).then((result) => {
+          //   if (result.isConfirmed) {
+          //     vm.deleteEvent(info.event)
+          //   }
+          // })
+        }
+      }
+    }
   },
   components: {
-    Card,
-    GradientLineChart,
-    Carousel,
-    CategoriesCard,
+    FullCalendar
   },
 };
 </script>

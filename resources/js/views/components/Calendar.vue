@@ -4,21 +4,25 @@
     <div class="col-12">
       <div class="card p-3">
         <div class="card-header pb-3 d-flex align-items-center">
-          <div class="col-8">
+          <div class="col-7">
             <h6>Xếp thời khóa biểu</h6>
             <input type="hidden" id="ngayhoc" v-model="ngayhoc">
           </div>
 
-          <div class="col-4">
+          <div class="col-3">
 
             <select name="lophoc" id="" class="form-select" v-model="id_lophoc" @change="changeEventsSource">
               <option v-for="lophoc in listLopHoc" :value="lophoc.id">{{ lophoc.id }}</option>
             </select>
           </div>
+          <div class="col-2 ms-2">
+
+           <button class="btn btn-sm btn-success">Xuất File</button>
+          </div>
 
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <FullCalendar :options="calendarOptions" ref="calendar" />
+          <FullCalendar :options="calendarOptions" ref="calendar"/>
         </div>
       </div>
     </div>
@@ -76,6 +80,7 @@
 }
 </style>
 <script>
+
 import FullCalendar from '@fullcalendar/vue3'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -88,6 +93,7 @@ import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import AddEventModal from "./AddEventModal.vue"
 import moment from 'moment';
+
 export default {
   components: {
     FullCalendar,
@@ -166,6 +172,9 @@ export default {
     }
   },
   methods: {
+    // exportToExcel(){
+    //   TableToExcel.convert(document.getElementById("simpleTable1"));
+    // },
     showModal(date) {
       if (this.id_lophoc != "") {
         let ngayhoc = moment(date.date).format('DD/MM/YYYY')
