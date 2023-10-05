@@ -96,7 +96,7 @@ import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import AddEventModal from "./AddEventModal.vue"
 import moment from 'moment';
-
+import VueHtmlToPaper from 'vue-html-to-paper';
 export default {
   components: {
     FullCalendar,
@@ -175,14 +175,13 @@ export default {
     }
   },
   methods: {
-    // exportToExcel(){
-    //   TableToExcel.convert(document.getElementById("simpleTable1"));
-    // },
+    exportToExcel(){
+      TableToExcel.convert(document.getElementById("simpleTable1"));
+    },
     showModal(date) {
       if (this.id_lophoc != "") {
         let ngayhoc = moment(date.date).format('DD/MM/YYYY')
         this.ngayhoc = ngayhoc
-        // console.log(date.date < Date.now())
         $("#exampleModalLabel").text("Thêm lịch học ngày " + this.ngayhoc)
         $("#ngayhoc").val(ngayhoc)
         let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('exampleModal'))
