@@ -77,13 +77,11 @@ export default {
   {
     async login(e) {
       e.preventDefault();
-      if(this.form.sdt=='')
-      {
+      if (this.form.sdt == '') {
         toast.error("Số điện thoại không được bỏ trống", { theme: 'colored' })
         return
       }
-      if(this.form.password=='')
-      {
+      if (this.form.password == '') {
         toast.error("Mật khẩu không được bỏ trống", { theme: 'colored' })
         return
       }
@@ -105,7 +103,8 @@ export default {
     }
   },
   mounted() {
-
+    window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('userID');
   },
   created() {
 
