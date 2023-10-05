@@ -71,4 +71,8 @@ class NgayHocController extends Controller
         $monhoc->save();
         return $ngayhoc->delete();
     }
+
+    public function getNgayHocByGiangVien($id) {
+        return MonhocNgayhoc::leftJoin('monhoc_lop', 'monhoc_ngayhoc.id_monhoc', 'monhoc_lop.id')->leftJoin('users', 'monhoc_lop.idgv', 'users.id')->leftJoin('phonghoc','monhoc_ngayhoc.maphong','phonghoc.id')->where('id_monhoc', '=', $id)->select('monhoc_lop.tenmh as title', 'monhoc_ngayhoc.*', 'users.name as description','phonghoc.tenphong as phong')->where('monhoc_lop.idgv','=',$id)->select('monhoc_lop.tenmh as title', 'monhoc_ngayhoc.*', 'users.name as description','phonghoc.tenphong as phong')->get();
+    }
 }

@@ -18,15 +18,18 @@ export default {
 
   name: "dashboard-default",
   data() {
+    var vm = this
     return {
+
+      user_id: window.sessionStorage.getItem('userID'),
       calendarOptions: {
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek',
         headerToolbar: [
 
         ],
-        events: {
-        },
+        events: []
+        ,
         locale: viLocale,
         slotMinTime: "07:30:00",
         slotMaxTime: "17:00:00",
@@ -46,28 +49,15 @@ export default {
         eventContent: function (arg) {
           let italicEl = document.createElement('div')
           italicEl.classList.add("item-event-tkb")
-          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Gv: " + arg.event._def.extendedProps.description + "<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
           let arrayOfDomNodes = [italicEl]
           return { domNodes: arrayOfDomNodes }
         },
         dateClick: function (date, jsEvent, view) {
-          // vm.showModal(date)
+
         },
         eventClick: function (info) {
-          // Swal.fire({
-          //   title: 'Xóa lịch ',
-          //   text: "Bạn sẽ không thể hoàn tác thao tác này",
-          //   icon: 'warning',
-          //   showCancelButton: true,
-          //   confirmButtonText: 'Xóa',
-          //   confirmButtonColor: '#00FFFF',
-          //   cancelButtonText: 'Đóng',
-          //   reverseButtons: true
-          // }).then((result) => {
-          //   if (result.isConfirmed) {
-          //     vm.deleteEvent(info.event)
-          //   }
-          // })
+
         }
       }
     }
@@ -75,5 +65,17 @@ export default {
   components: {
     FullCalendar
   },
+  methods: {
+     getLichHoc() {
+      let _THIS = this
+      let calendarApi = this.$refs.calendar.getApi()
+
+      calendarApi.addEventSource( this.API_URL + "/getngayhocbygv/" + this.user_id)
+      calendarApi.refetchEvents()
+    }
+  },
+  mounted() {
+    this.getLichHoc();
+  }
 };
 </script>

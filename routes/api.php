@@ -22,8 +22,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', [AuthController::class,'login']);
-Route::get('/getphonghocbydate/{start}', [PhongHocController::class,'getPhongHocByDate']);
+ Route::get('/getngayhocbygv/{id}', [NgayHocController::class,'getNgayHocByGiangVien']);
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/getphonghocbydate/{start}', [PhongHocController::class,'getPhongHocByDate']);
+   
     Route::resource('/lophoc', LopHocController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/ngayhoc', NgayHocController::class);

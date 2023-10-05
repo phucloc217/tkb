@@ -92,6 +92,7 @@ export default {
         .then(function (res) {
           try {
             window.sessionStorage.setItem('token', res.data.access_token);
+            window.sessionStorage.setItem('userID', res.data.user_id);
             _THIS.$router.push("/")
 
           } catch (error) {
