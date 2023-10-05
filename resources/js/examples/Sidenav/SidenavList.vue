@@ -15,7 +15,7 @@
           </template>
         </sidenav-item>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="can('view teacher')">
         <sidenav-item
           url="/giangvien"
           :class="getRoute() === 'giangvien' ? 'active' : ''"
@@ -26,7 +26,7 @@
           </template>
         </sidenav-item>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="can('can make schedule')">
         <sidenav-item
           url="/xeptkb"
           :class="getRoute() === 'xeptkb' ? 'active' : ''"
@@ -39,7 +39,7 @@
           </template>
         </sidenav-item>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="can('view class')">
         <sidenav-item
           url="/lophoc"
           :class="getRoute() === 'lophoc' ? 'active' : ''"
@@ -50,7 +50,7 @@
           </template>
         </sidenav-item>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="can('view subject')">
         <sidenav-item
           url="/monhoc"
           :class="getRoute() === 'monhoc' ? 'active' : ''"
@@ -61,7 +61,7 @@
           </template>
         </sidenav-item>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="can('view room')">
         <sidenav-item
           url="/phonghoc"
           :class="getRoute() === 'phonghoc' ? 'active' : ''"

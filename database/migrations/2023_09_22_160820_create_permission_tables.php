@@ -136,6 +136,10 @@ class CreatePermissionTables extends Migration
         Permission::create(['guard_name' => 'sanctum','name' => 'edit class']);
         Permission::create(['guard_name' => 'sanctum','name' => 'add class']);
         Permission::create(['guard_name' => 'sanctum','name' => 'delete class']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'view room']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'edit room']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'add room']);
+        Permission::create(['guard_name' => 'sanctum','name' => 'delete room']);
         Permission::create(['guard_name' => 'sanctum','name' => 'add subject']);
         Permission::create(['guard_name' => 'sanctum','name' => 'edit subject']);
         Permission::create(['guard_name' => 'sanctum','name' => 'view subject']);
@@ -155,6 +159,10 @@ class CreatePermissionTables extends Migration
         $user->givePermissionTo('add subject');
         $user->givePermissionTo('edit subject');
         $user->givePermissionTo('delete subject');
+        $user->givePermissionTo('view room');
+        $user->givePermissionTo('add room');
+        $user->givePermissionTo('edit room');
+        $user->givePermissionTo('delete room');
         $user->givePermissionTo('can make schedule');
         $user->givePermissionTo('can change permisions');
     }

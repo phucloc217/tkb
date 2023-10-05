@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
-use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
+use SpatiePermissionVue\Traits\RolesPermissionsToVue;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -36,7 +36,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User  extends Authenticatable
 {
-	use HasApiTokens, HasRoles, LaravelPermissionToVueJS;
+	use HasApiTokens, HasRoles, RolesPermissionsToVue;
 	protected $table = 'users';
 	public $incrementing = true;
 
