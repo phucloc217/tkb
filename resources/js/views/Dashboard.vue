@@ -47,9 +47,10 @@ export default {
         },
         hiddenDays: [0],
         eventContent: function (arg) {
+          console.log(arg)
           let italicEl = document.createElement('div')
           italicEl.classList.add("item-event-tkb")
-          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
+          italicEl.innerHTML = arg.timeText + "<br/>" + '<b>' + arg.event._def.title + "</b>" + "<br/>" + "Lớp: "+ arg.event._def.extendedProps.description+"<br/>" + "Phòng: " + arg.event._def.extendedProps.phong
           let arrayOfDomNodes = [italicEl]
           return { domNodes: arrayOfDomNodes }
         },

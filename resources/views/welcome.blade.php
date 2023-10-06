@@ -3,6 +3,7 @@
 
 <head>
     <title>Xếp thời khóa biểu</title>
+    <link rel="icon" type="image/PNG" href="{{URL('favicon.png')}}"/>
     {{-- <link rel="stylesheet" href="{{url("build/assets/app-484413a9.css")}}"> --}}
   <script src="{{url('/jquery.slim.min.js')}}"></script>
   <script src="{{url('/bootstrap.bundle.js')}}" ></script>
