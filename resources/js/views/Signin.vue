@@ -91,8 +91,8 @@ export default {
           try {
             window.sessionStorage.setItem('token', res.data.access_token);
             window.sessionStorage.setItem('userID', res.data.user_id);
-            _THIS.$router.push("/")
-
+            // _THIS.$router.push("/")
+            window.location.replace("/");
           } catch (error) {
             toast.error("Không thể đăng nhập lúc này", { theme: 'colored' })
           }
@@ -105,6 +105,7 @@ export default {
   mounted() {
     window.sessionStorage.removeItem('token');
     window.sessionStorage.removeItem('userID');
+
   },
   created() {
 
