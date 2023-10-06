@@ -24,6 +24,7 @@ return new class extends Migration
             $table->char('sdt', 11)->nullable();
             $table->string('diachi')->nullable();
             $table->string('email')->unique();
+            $table->string('anh')->nullable()->default('team-1.jpg');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
