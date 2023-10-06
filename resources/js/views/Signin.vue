@@ -21,8 +21,6 @@
                       <input type="password" class="form-control form-control-lg" placeholder="Mật khẩu"
                         v-model="form.password" autocomplete="new-password">
                     </div>
-                    <argon-switch id="rememberMe">Ghi nhớ đăng nhập</argon-switch>
-
                     <div class="text-center">
                       <button class="btn btn-lg mt-4 bg-gradient-success w-100" type="submit">Đăng nhập</button>
                     </div>
