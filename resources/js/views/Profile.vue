@@ -84,10 +84,7 @@
                   <label for="example-text-input" class="form-control-label">Email</label>
                   <argon-input type="email" value="loc.nguyen456789@gmail.com" />
                 </div>
-                <div class="col-md-4">
-                  <label for="example-text-input" class="form-control-label">Postal code</label>
-                  <argon-input type="text" value="437300" />
-                </div>
+                
               </div>
             </div>
           </div>
