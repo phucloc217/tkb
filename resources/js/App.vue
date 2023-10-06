@@ -6,8 +6,7 @@
   <sidenav
     :custom_class="this.$store.state.mcolor"
     :class="[
-      this.$store.state.isTransparent,
-      this.$store.state.isRTL ? 'fixed-end' : 'fixed-start'
+      this.$store.state.isTransparent
     ]"
     v-if="this.$store.state.showSidenav"
   />
@@ -25,18 +24,17 @@
     />
     <router-view />
     <app-footer v-show="this.$store.state.showFooter" />
-    <configurator
+    <!-- <configurator
       :toggle="toggleConfigurator"
       :class="[
         this.$store.state.showConfig ? 'show' : '',
         this.$store.state.hideConfigButton ? 'd-none' : ''
       ]"
-    />
+    /> -->
   </main>
 </template>
 <script>
 import Sidenav from "./examples/Sidenav/index.vue";
-import Configurator from "./examples/Configurator.vue";
 import Navbar from "./examples/Navbars/Navbar.vue";
 import AppFooter from "./examples/Footer.vue";
 import { mapMutations } from "vuex";
@@ -44,7 +42,6 @@ export default {
   name: "App",
   components: {
     Sidenav,
-    Configurator,
     Navbar,
     AppFooter
   },

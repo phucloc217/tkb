@@ -22,7 +22,12 @@
 </head>
 
 <body>
-    <div id="app"></div>
+  <noscript>
+    <strong
+      >Bạn phải bật JavaScript để có thể sử dụng chương trình này</strong
+    >
+  </noscript>
+    <div id="app" class="g-sidenav-show"></div>
     @vite('resources/js/app.js')
     {{-- <script type="module" src="{{url("build/assets/app-91cffe1a.js")}}"></script> --}}
 </body>
