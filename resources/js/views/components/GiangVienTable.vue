@@ -1,10 +1,12 @@
 <template>
   <div class="card">
     <div class="card-header pb-0">
-      <div class="d-flex align-items-center"> <h6>Danh sách giảng viên</h6>
-      <router-link to="/themgiangvien" class="btn btn-sm btn-success ms-auto" color="success" >Thêm Giảng viên</router-link>
+      <div class="d-flex align-items-center">
+        <h6>Danh sách giảng viên</h6>
+        <router-link to="/themgiangvien" class="btn btn-sm btn-success ms-auto" color="success">Thêm Giảng
+          viên</router-link>
       </div>
-     
+
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -32,16 +34,29 @@
                 </div>
               </td>
               <td>
-                <p class="text-xs font-weight-bold mb-0">{{  giangvien.hocham == 'GS' ? 'Giáo sư' : giangvien.hocham == 'PSG' ? "Phó giáo sư":""}}</p>
-                <p class="text-xs text-secondary mb-0">{{ giangvien.hocvi == 'CN' ? 'Cử nhân / Kỹ sư':giangvien.hocvi=='THS'?'Thạc sĩ':'Tiến sĩ' }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ giangvien.hocham == 'GS' ? 'Giáo sư' : giangvien.hocham ==
+                  'PSG' ? "Phó giáo sư" : "" }}</p>
+                <p class="text-xs text-secondary mb-0">
+                  {{ giangvien.hocvi == 'CN' ? 'Cử nhân / Kỹ sư' : giangvien.hocvi == 'THS' ? 'Thạc sĩ' : 'Tiến sĩ' }}</p>
               </td>
 
               <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold">{{ giangvien.sdt }}</span>
               </td>
-              <td class="align-middle">
-                <router-link :to="{name: 'Update Giảng Viên', params: {id: giangvien.id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                  data-original-title="Edit user">Chỉnh sửa </router-link>
+              <td class="align-middle row">
+                <div class="col-6">
+                  <router-link :to="{ name: 'Update Giảng Viên', params: { id: giangvien.id } }"
+                    class="text-secondary font-weight-bold text-xs btn btn-link" data-toggle="tooltip"
+                    data-original-title="Edit user">Chỉnh sửa </router-link>
+                </div>
+                <div class="col-6">
+                  <button @click="resetPassword(giangvien.id)"
+                    class="text-secondary font-weight-bold text-xs border-0 btn btn-link">Đặt lại mật khẩu </button>
+                </div>
+
+
+
+
               </td>
             </tr>
 
@@ -59,7 +74,7 @@ import ArgonButton from "@/components/ArgonButton.vue";
 export default {
 
   name: "giangvien-table",
-  components:{
+  components: {
     ArgonButton,
   },
   data() {
@@ -79,6 +94,40 @@ export default {
           toast.error("Đã xảy ra lỗi", { theme: 'colored' })
         });
     },
+    async resetPassword(id) {
+      const { value: password } = await this.$swal({
+        title: 'Nhập mật khẩu mới',
+        input: 'password',
+        inputPlaceholder: 'Nhập mật khẩu',
+        inputAttributes: {
+          maxlength: 16,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        }
+      })
+
+      if (password) {
+        let data = {
+          userID: id,
+          newpassword: password
+        }
+        this.postPassword(data)
+      }
+
+    },
+    async postPassword(data) {
+      let _THIS = this
+      await axios.post(this.API_URL + "/changepassword", data)
+        .then(function (res) {
+          _THIS.$swal('Cập nhật thành công')
+        })
+        .catch(function (err) {
+          _THIS.$swal({
+            icon: 'error',
+            text: 'Cập nhật không thành công'
+          })
+        })
+    }
   },
   mounted() {
     this.getGiangVien();

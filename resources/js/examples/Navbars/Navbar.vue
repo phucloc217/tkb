@@ -34,7 +34,7 @@
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
-              href="#"
+              href="javascript:;"
               @click="toggleSidebar"
               class="p-0 nav-link text-white"
               id="iconNavbarSidenav"

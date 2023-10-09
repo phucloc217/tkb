@@ -126,7 +126,6 @@ export default {
     return {
       showMenu: false,
       permissions:ref([]),
-      listPermisions: [],
       user: '',
       form: {
         name: '',
@@ -222,7 +221,6 @@ export default {
         }
       })
         .then(function (response) {
-          console.log(response)
           toast.success("Cập nhật thành công", { theme: 'colored' })
         })
         .catch(function (err) {

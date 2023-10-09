@@ -66,7 +66,7 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, string $id)
     {
-        if(!$request->user()->can('update teacher'))
+        if(!$request->user()->can('edit teacher')&&$request->user()->id!=$id)
         return response()->json(['message' => 'Bạn không có quyền sửa thông tin giảng viên'], Response::HTTP_UNAUTHORIZED);
         $user = User::find($id);
         $input = $request->all();
@@ -78,12 +78,20 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id,Request $request)
-    {
+    { 
+
         if(!$request->user()->can('delete teacher'))
         return response()->json(['message' => 'Bạn không có quyền xóa giảng viên'], Response::HTTP_UNAUTHORIZED);
-        $user = User::where('id', '=', $id)->first;
+        $user = User::where('id', '=', $id)->first();
         if (!$user->isEmpty())
             return $user->delete();
         return response()->json(['message' => 'Không tìm thấy giảng viên'], Response::HTTP_NOT_FOUND);
+    }
+
+    public function chagePassword(Request $request) {
+        if(!$request->user()->can('edit teacher'))return response()->json(['message' => 'Bạn không có quyền thay đổi mật khẩu'], Response::HTTP_UNAUTHORIZED);
+        $user = User::where('id', '=', $request->userID)->first();
+        $user->password = Hash::make($request->newpassword);
+        return $user->save();
     }
 }
