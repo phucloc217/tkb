@@ -36,6 +36,11 @@ const routes = [
     component: () => import("./views/MonHoc.vue"),
   },
   {
+    path: "/setup",
+    name: "Setup",
+    component: () => import("./views/Setup.vue"),
+  },
+  {
     path: "/phonghoc",
     name: "Quản lý phòng học",
     component: () => import("./views/PhongHoc.vue"),
@@ -71,7 +76,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/dangnhap'];
+  const publicPages = ['/dangnhap','/setup'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = window.sessionStorage.getItem('token');
 
