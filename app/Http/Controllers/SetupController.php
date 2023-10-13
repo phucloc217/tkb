@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,10 +14,29 @@ use Spatie\Permission\Models\Permission;
 
 class SetupController extends Controller
 {
-    public function checkDatabase() {
-        
+    public function checkDatabase()
+    {
+        try {
+            $dbconnect = DB::connection()->getPDO();
+            $dbname = DB::connection()->getDatabaseName();
+            return $dbname;
+        } catch (Exception $e) {
+            return 0;
+        }
     }
-    public function createAdminUser(UserRequest $request) {
+
+    public function createDatabase()
+    {
+        try {
+            Artisan::call('migrate');
+            return 1;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    public function createAdminUser(UserRequest $request)
+    {
         DB::beginTransaction();
         try {
             $date = date("dmY", strtotime($request->ngaysinh));
@@ -25,7 +46,7 @@ class SetupController extends Controller
             $user->syncPermissions(Permission::all());
             DB::commit();
             return response()->json($user, Response::HTTP_CREATED);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             return $e;
         }
