@@ -95,7 +95,9 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
                 <p class="mb-0">Thiết lập cơ sở dữ liệu và thông tin quản trị</p>
-                <argon-button color="success" size="sm" class="ms-auto">Tiếp tục</argon-button>
+
+
+                <button type="button" class="btn mb-0 btn-sm btn-success ms-auto" @click="btnSave">Tiếp tục</button>
               </div>
             </div>
 
@@ -202,17 +204,17 @@ export default {
   methods:
   {
     async btnSave() {
-      let _THIS = this
       let db
       await axios.get(this.API_URL + '/checkdb')
         .then(function (res) {
           db = res.data
+          console.log(db)
         })
         .catch(function (err) {
           toast.error("Không thể kiểm tra trạng thái CSDL", { theme: 'colored' })
           return
         })
-      if (db == 0) {
+      if (db == 'tkb') {
         await axios.get(this.API_URL + '/createdb')
           .then(function (res) {
             db = res.data
@@ -222,13 +224,21 @@ export default {
             return
           })
       }
+      else{
+        toast.info("Bạn phải tạo CSDL có tên 'tkb' trước", { theme: 'colored' })
+      }
       if (db == 1) {
-        await axios.post(this.API_URL + '/createadmin', this.form)
+        console.log(db)
+        let _THIS = this
+        await axios.post(this.API_URL + '/createadmin', _THIS.form)
           .then(function (res) {
             toast.success("Khởi tạo thành công", { theme: 'colored' })
             setTimeout(function () {
               window.location.replace("/");
             }, 3000)
+          })
+          .catch(function(err){
+            console.log(err)
           })
       }
     }

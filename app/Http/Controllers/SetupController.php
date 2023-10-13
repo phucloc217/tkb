@@ -19,6 +19,7 @@ class SetupController extends Controller
         try {
             $dbconnect = DB::connection()->getPDO();
             $dbname = DB::connection()->getDatabaseName();
+
             return $dbname;
         } catch (Exception $e) {
             return 0;
@@ -28,10 +29,10 @@ class SetupController extends Controller
     public function createDatabase()
     {
         try {
-            Artisan::call('migrate --no-interaction');
+            Artisan::call('migrate');
             return 1;
         } catch (Exception $e) {
-            return 0;
+            return $e;
         }
     }
 
