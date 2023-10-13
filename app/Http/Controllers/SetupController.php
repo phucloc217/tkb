@@ -28,7 +28,7 @@ class SetupController extends Controller
     public function createDatabase()
     {
         try {
-            Artisan::call('migrate');
+            Artisan::call('migrate --no-interaction');
             return 1;
         } catch (Exception $e) {
             return 0;

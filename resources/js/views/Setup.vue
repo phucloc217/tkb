@@ -155,7 +155,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </main>
 </template>
@@ -169,6 +169,7 @@ import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 const body = document.getElementsByTagName("body")[0];
 import { toast } from 'vue3-toastify';
+import axios from "axios";
 export default {
   name: "setup",
   components: {
@@ -179,6 +180,7 @@ export default {
   },
   data() {
     return {
+      database: '',
       form: {
         name: '',
         ngaysinh: '',
@@ -199,7 +201,37 @@ export default {
   },
   methods:
   {
-
+    async btnSave() {
+      let _THIS = this
+      let db
+      await axios.get(this.API_URL + '/checkdb')
+        .then(function (res) {
+          db = res.data
+        })
+        .catch(function (err) {
+          toast.error("Không thể kiểm tra trạng thái CSDL", { theme: 'colored' })
+          return
+        })
+      if (db == 0) {
+        await axios.get(this.API_URL + '/createdb')
+          .then(function (res) {
+            db = res.data
+          })
+          .catch(function (err) {
+            toast.error("Không thể tạo CSDL", { theme: 'colored' })
+            return
+          })
+      }
+      if (db == 1) {
+        await axios.post(this.API_URL + '/createadmin', this.form)
+          .then(function (res) {
+            toast.success("Khởi tạo thành công", { theme: 'colored' })
+            setTimeout(function () {
+              window.location.replace("/");
+            }, 3000)
+          })
+      }
+    }
 
   },
   mounted() {

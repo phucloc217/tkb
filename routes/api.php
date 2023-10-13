@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhongHocController;
+use App\Http\Controllers\SetupController;
 use App\Models\MonhocNgayhoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,16 +22,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/login', [AuthController::class,'login']);
- Route::get('/getngayhocbygv/{id}', [NgayHocController::class,'getNgayHocByGiangVien']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/getngayhocbygv/{id}', [NgayHocController::class, 'getNgayHocByGiangVien']);
+Route::get('/checkdb',[SetupController::class,'checkDatabase']);
+Route::get('/createdb',[SetupController::class,'createDatabase']);
+Route::post('/createadmin',[SetupController::class,'createAdminUser']);
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/getphonghocbydate/{start}', [PhongHocController::class,'getPhongHocByDate']);
-    Route::post('/changepassword',[UserController::class,'chagePassword']);
+    Route::get('/getphonghocbydate/{start}', [PhongHocController::class, 'getPhongHocByDate']);
+    Route::post('/changepassword', [UserController::class, 'chagePassword']);
     Route::resource('/lophoc', LopHocController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/ngayhoc', NgayHocController::class);
     Route::resource('/monhoc', MonHocController::class);
     Route::resource('/phanquyen', PermissionsController::class);
     Route::resource('/phonghoc', PhongHocController::class);
-   
+
 });
